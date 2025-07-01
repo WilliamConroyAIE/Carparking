@@ -2,189 +2,125 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class AxleInfo
-{
-    public WheelCollider leftWheel;
-    public WheelCollider rightWheel;
-    public GameObject leftWheelGO;
-    public GameObject rightWheelGO;
-    public bool motor;
-    public bool steering;
-}
-
 public class Car : MonoBehaviour
 {
     #region SimStuff
     [Header("SimStuff")]
     public Transform model;
+
     public enum carType
     {
-        taxi,
-        sedan,
-        suv,
-        van,
-        ute,
-        sport,
-        rozzas
+        taxi, sedan, suv, van, ute, sport, rozzas
     }
     public carType currentType;
 
     [Header("Clearances")]
-    public float leftSideClearance; 
+    public float leftSideClearance;
     public float rightSideClearance, frontClearance, backClearance;
-    
+
     [Header("Sides")]
-    [SerializeField] private float leftSide; 
+    [SerializeField] private float leftSide;
     [SerializeField] private float rightSide, frontSide, backSide;
 
-        private void Start()
+    private void Start()
     {
+        // Set clearances based on vehicle type
         switch (currentType)
         {
             case carType.taxi:
-                leftSide = 0.01086f;
-                rightSide = -0.01086f;
-                frontSide = 0.02144f;
-                backSide = -0.02054f;
-            break;
-
-
+                SetSides(0.02172f, 0.04288f, -0.04108f); break;
             case carType.sedan:
-                leftSide = 0.01051f;
-                rightSide = -0.01051f;
-                frontSide = 0.0264f;
-                backSide = -0.02628f;
-            break;
-
+                SetSides(0.02102f, 0.0528f, -0.05256f); break;
             case carType.suv:
-                leftSide = 0.01068f;
-                rightSide = -0.01068f;
-                frontSide = 0.02262f;
-                backSide = -0.02288f;
-            break;
-
+                SetSides(0.02136f, 0.04524f, -0.04576f); break;
             case carType.van:
-                leftSide = 0.01104f;
-                rightSide = -0.01104f;
-                frontSide = 0.02327f;
-                backSide = -0.02404f;
-            break;
-
+                SetSides(0.02208f, 0.04654f, -0.04808f); break;
             case carType.ute:
-                leftSide = 0.00961f;
-                rightSide = -0.00961f;
-                frontSide = 0.02519f;
-                backSide = -0.02525f;
-            break;
-
+                SetSides(0.01922f, 0.05038f, -0.05050f); break;
             case carType.sport:
-                leftSide = 0.01069f;
-                rightSide = -0.01069f;
-                frontSide = 0.02292f;
-                backSide = -0.0229f;
-            break;
-
+                SetSides(0.02138f, 0.04584f, -0.0438f); break;
             case carType.rozzas:
-                leftSide = 0.00976f;
-                rightSide = -0.00976f;
-                frontSide = 0.02692f;
-                backSide = -0.0215f;
-            break;
+                SetSides(0.01952f, 0.05384f, -0.043f); break;
         }
 
-        leftSideClearance = model.position.x + leftSide + .005f;
-        rightSideClearance = model.position.x + rightSide + .005f;
-        frontClearance = model.position.y + frontSide + .001f;
-        backClearance = model.position.y + backSide;
+        // Calculate clearances
+        leftSideClearance = model.position.x + leftSide + 0.01f;
+        rightSideClearance = model.position.x + rightSide - 0.01f;
+        frontClearance = model.position.z + frontSide + 0.002f;
+        backClearance = model.position.z + backSide;
+    }
+
+    private void SetSides(float sideOffset, float front, float back)
+    {
+        leftSide = sideOffset;
+        rightSide = -sideOffset;
+        frontSide = front;
+        backSide = back;
     }
     #endregion
 
+    [Header("Wheel Colliders")]
+    public WheelCollider wheelFL;
+    public WheelCollider wheelFR;
+    public WheelCollider wheelRL;
+    public WheelCollider wheelRR;
 
+    [Header("Wheel Meshes")]
+    public Transform meshFL;
+    public Transform meshFR;
+    public Transform meshRL;
+    public Transform meshRR;
 
-    [Header("MakeCarWorkInterestingThings")]
-    public AxleInfo[] axleInfo;
-    public float maxMotorTorque = 500f, maxSteeringAngle = 65f, brakeTorque = 1000, deceleration = 800;   
+    [Header("Car Settings")]
+    public float maxMotorTorque = 1500f;
+    public float maxSteerAngle = 30f;
+    public float brakeForce = 3000f;
 
-    [Header("Control")]
-    public float motorInput;
-    public float steeringInput;
-    public bool brakeInput;
+    private float motor;
+    private float steer;
+    private float brake;
 
     void Update()
     {
-        motorInput = Input.GetAxis("Vertical");
-        steeringInput = Input.GetAxis("Horizontal");
-        brakeInput = Input.GetKey(KeyCode.Space);
+        // Input
+        motor = maxMotorTorque * Input.GetAxis("Vertical");
+        steer = maxSteerAngle * Input.GetAxis("Horizontal");
+        brake = Input.GetKey(KeyCode.Space) ? brakeForce : 0f;
     }
 
     void FixedUpdate()
     {
-        float motor = maxMotorTorque * motorInput;
-        float steering = maxSteeringAngle * steeringInput;
+        // Apply steering
+        wheelFL.steerAngle = steer;
+        wheelFR.steerAngle = steer;
 
-        for (int i = 0; i < axleInfo.Length; i++)
-        {
-            if (brakeInput == true)
-            {
-                axleInfo[i].leftWheel.brakeTorque = brakeTorque;
-                axleInfo[i].rightWheel.brakeTorque = brakeTorque;
-            }
-            else
-            {
-                axleInfo[i].leftWheel.brakeTorque = 0;
-                axleInfo[i].rightWheel.brakeTorque = 0;
-            }
-            
-            if (axleInfo[i].steering)
-            {
-                axleInfo[i].leftWheel.steerAngle = steering;
-                axleInfo[i].rightWheel.steerAngle = steering;
-            }
+        // Apply motor torque
+        wheelFL.motorTorque = motor;
+        wheelFR.motorTorque = motor;
 
-            if (axleInfo[i].motor)
-            {
-                if (brakeInput == true)
-                {
-                    axleInfo[i].leftWheel.brakeTorque = brakeTorque;
-                    axleInfo[i].rightWheel.brakeTorque = brakeTorque;
-                }
-                else
-                {
-                    axleInfo[i].leftWheel.brakeTorque = 0;
-                    axleInfo[i].rightWheel.brakeTorque = 0;
-                }
+        // Apply brakes
+        wheelFL.brakeTorque = brake;
+        wheelFR.brakeTorque = brake;
+        wheelRL.brakeTorque = brake;
+        wheelRR.brakeTorque = brake;
 
-                if (motorInput == 0)
-                {
-                    axleInfo[i].leftWheel.brakeTorque = deceleration;
-                    axleInfo[i].rightWheel.brakeTorque = deceleration;
-                }
-                else
-                {
-                    axleInfo[i].leftWheel.motorTorque = motor;
-                    axleInfo[i].rightWheel.motorTorque = motor;
-                }
-
-            }
-
-            ApplyPositionToVisuals(axleInfo[i].leftWheel, axleInfo[i].leftWheelGO);
-            ApplyPositionToVisuals(axleInfo[i].rightWheel, axleInfo[i].rightWheelGO);
-        }
+        UpdateWheels();
     }
 
-
-    void ApplyPositionToVisuals(WheelCollider collider, GameObject wheelGO)
+    void UpdateWheels()
     {
-        if (wheelGO == null) return;
+        UpdateWheelPose(wheelFL, meshFL);
+        UpdateWheelPose(wheelFR, meshFR);
+        UpdateWheelPose(wheelRL, meshRL); 
+        UpdateWheelPose(wheelRR, meshRR);
+    }
 
-        Vector3 tempPosition;
-        Quaternion tempRotation;
-
-        collider.GetWorldPose(out tempPosition, out tempRotation);
-
-        wheelGO.transform.position = tempPosition;
-        wheelGO.transform.rotation = tempRotation;
-
+    void UpdateWheelPose(WheelCollider collider, Transform mesh)
+    {
+        Vector3 pos;
+        Quaternion rot;
+        collider.GetWorldPose(out pos, out rot);
+        mesh.position = pos;
+        mesh.rotation = rot; // or -90, depending on your mesh's orientation
     }
 }
