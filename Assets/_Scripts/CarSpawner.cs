@@ -9,6 +9,16 @@ public class CarSpawner : MonoBehaviour
     public Truck[] truckPrefabs;
     public Bus[] busPrefabs;
 
-    
+    [Space]
 
+    [Header("VehicleList")]
+    public List<GameObject> vehicles;
+
+
+    private void Start()
+    {
+        
+    }
+    
+    
 }
