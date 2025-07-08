@@ -9,9 +9,9 @@ public class CarSpawner : MonoBehaviour
     public LayerMask Vehicle;
 
     [Header("Arrays and Prefabs")]
-    public Car[] carPrefabs;
-    public Truck[] truckPrefabs;
-    public Bus[] busPrefabs;
+    public NewCar[] carPrefabs;
+    public NewTruck[] truckPrefabs;
+    public NewBus[] busPrefabs;
 
     [Space]
 
@@ -37,6 +37,8 @@ public class CarSpawner : MonoBehaviour
 
     private GameObject vehiclePrefab = null;
 
+    private ParkingArray pA;
+
     [Header("Timer")]
     public float simulationTimer = 0f;
     private bool timerRunning = false;
@@ -52,6 +54,8 @@ public class CarSpawner : MonoBehaviour
         
         standardCars = new List<GameObject>();
         disabledCars = new List<GameObject>();
+
+        pA = GameObject.FindWithTag("parkingTag").GetComponent<ParkingArray>();
     }
 
     private void Update()
@@ -164,143 +168,58 @@ public class CarSpawner : MonoBehaviour
         for (int i = 0; i < totalVInt.Count; i++)
         {
             spawnableCarTypeInt = Random.Range(0, 11);
+            vehiclePrefab = null;
+            canSpawn = false;
 
             switch (spawnableCarTypeInt)
             {
-                case 0:
-                    if (taxiSpawnabool())
-                    {
-                        vehiclePrefab = carPrefabs[0].gameObject;
-                        removalInt = 0;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 1:
-                    if (sedanSpawnabool())
-                    {
-                        vehiclePrefab = carPrefabs[1].gameObject;
-                        removalInt = 1;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 2:
-                    if (suvSpawnabool())
-                    {
-                        vehiclePrefab = carPrefabs[2].gameObject;
-                        removalInt = 2;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 3:
-                    if (vanSpawnabool())
-                    {
-                        vehiclePrefab = carPrefabs[3].gameObject;
-                        removalInt = 3;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 4:
-                    if (uteSpawnabool())
-                    {
-                        vehiclePrefab = carPrefabs[4].gameObject;
-                        removalInt = 4;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 5:
-                    if (sportsSpawnabool())
-                    {
-                        vehiclePrefab = carPrefabs[5].gameObject;
-                        removalInt = 5;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 6:
-                    if (rozzasSpawnabool())
-                    {
-                        vehiclePrefab = carPrefabs[6].gameObject;
-                        removalInt = 6;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 7:
-                    if (busSpawnabool())
-                    {
-                        vehiclePrefab = busPrefabs[0].gameObject;
-                        removalInt = 7;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 8:
-                    if (boxTruckSpawnabool())
-                    {
-                        vehiclePrefab = truckPrefabs[0].gameObject;
-                        removalInt = 8;
-                        canSpawn = true;
-                    }
-                    break;
-
-                case 9:
-                    if (fluidTruckSpawnabool())
-                    {
-                        vehiclePrefab = truckPrefabs[1].gameObject;
-                        removalInt = 9;
-                        canSpawn = true;
-                    }
-                    break;
-
+                case 0: if (taxiSpawnabool()) { vehiclePrefab = carPrefabs[0].gameObject; removalInt = 0; canSpawn = true; } break;
+                case 1: if (sedanSpawnabool()) { vehiclePrefab = carPrefabs[1].gameObject; removalInt = 1; canSpawn = true; } break;
+                case 2: if (suvSpawnabool()) { vehiclePrefab = carPrefabs[2].gameObject; removalInt = 2; canSpawn = true; } break;
+                case 3: if (vanSpawnabool()) { vehiclePrefab = carPrefabs[3].gameObject; removalInt = 3; canSpawn = true; } break;
+                case 4: if (uteSpawnabool()) { vehiclePrefab = carPrefabs[4].gameObject; removalInt = 4; canSpawn = true; } break;
+                case 5: if (sportsSpawnabool()) { vehiclePrefab = carPrefabs[5].gameObject; removalInt = 5; canSpawn = true; } break;
+                case 6: if (rozzasSpawnabool()) { vehiclePrefab = carPrefabs[6].gameObject; removalInt = 6; canSpawn = true; } break;
+                case 7: if (busSpawnabool()) { vehiclePrefab = busPrefabs[0].gameObject; removalInt = 7; canSpawn = true; } break;
+                case 8: if (boxTruckSpawnabool()) { vehiclePrefab = truckPrefabs[0].gameObject; removalInt = 8; canSpawn = true; } break;
+                case 9: if (fluidTruckSpawnabool()) { vehiclePrefab = truckPrefabs[1].gameObject; removalInt = 9; canSpawn = true; } break;
             }
 
-            if (canSpawn)
+            // Check distance BEFORE spawning
+            if (canSpawn && !Physics.CheckSphere(spawnPoint.position, 10f, Vehicle))
             {
-                //Spawns cars
                 GameObject nextVechileToSpawn = Instantiate(vehiclePrefab, spawnPoint.position, spawnPoint.rotation);
-                
-                // Decrement the proper count
+                vehicles.Add(nextVechileToSpawn); // Optional: keep track
+
                 switch (removalInt)
                 {
-                    case 0: taxiNo--; break;
-                    case 1: sedanNo--; break;
-                    case 2: suvNo--; break;
-                    case 3: vanNo--; break;
-                    case 4: uteNo--; break;
-                    case 5: sportNo--; break;
-                    case 6: rozzasNo--; break;
-                    case 7: busNo--; break;
-                    case 8: boxTruckNo--; break;
-                    case 9: fluidTruckNo--; break;
+                    case 0: taxiNo--; nextVechileToSpawn.GetComponent<NewCar>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 1: sedanNo--; nextVechileToSpawn.GetComponent<NewCar>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 2: suvNo--; nextVechileToSpawn.GetComponent<NewCar>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 3: vanNo--; nextVechileToSpawn.GetComponent<NewCar>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 4: uteNo--; nextVechileToSpawn.GetComponent<NewCar>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 5: sportNo--; nextVechileToSpawn.GetComponent<NewCar>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 6: rozzasNo--; nextVechileToSpawn.GetComponent<NewCar>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 7: busNo--; nextVechileToSpawn.GetComponent<NewBus>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 8: boxTruckNo--; nextVechileToSpawn.GetComponent<NewTruck>().StartDriving(pA.parkingWaypoints, pA, this); break;
+                    case 9: fluidTruckNo--; nextVechileToSpawn.GetComponent<NewTruck>().StartDriving(pA.parkingWaypoints, pA, this); break;
                 }
-                
             }
 
+            // Reset spawn attempt state
             vehiclePrefab = null;
-            removalInt = 0;
             canSpawn = false;
 
-            totalVInt.Clear();
-            
+            // Delay before next spawn attempt
+            yield return new WaitForSeconds(1f);
+
             resetTotalVInt();
-
-            bool carToClose = Physics.CheckSphere(spawnPoint.position, 10f, Vehicle);
-
-            if (!carToClose)
-            {
-                yield return new WaitForSeconds(1f);
-
-                totalVInt.Clear();
-                totalVechiles = 0;
-            }
-
         }
+
+        totalVInt.Clear();  // Only clear once after all spawns
+        totalVechiles = 0;
     }
+
 
     private void resetTotalVInt()
     {

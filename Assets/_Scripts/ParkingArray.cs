@@ -6,9 +6,9 @@ public class ParkingArray : MonoBehaviour
 {
     public int parkingSpotTotal;
 
-    [Header("Prefabs")]
+    /*[Header("Prefabs")]
     public GameObject carParkingSpot;
-    public GameObject disabledParkingSpot;
+    public GameObject disabledParkingSpot;*/
 
     [Header("Lists")]
     public List<Transform> parkingWaypoints;
@@ -27,9 +27,9 @@ public class ParkingArray : MonoBehaviour
         foreach(GameObject d in dParks)
             availableDisabled.Add(d);
 
-        GameObject[] tWaypoints = GameObject.FindGameObjectsWithTag("waypointTag");
+        /*GameObject[] tWaypoints = GameObject.FindGameObjectsWithTag("waypointTag");
         foreach(GameObject t in tWaypoints)
-            parkingWaypoints.Add(t.transform);
+            parkingWaypoints.Add(t.transform);*/
 
 
         parkingSpotTotal = (availableStandard.Count) + (availableDisabled.Count);

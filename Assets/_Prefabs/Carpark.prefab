@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 298577653688877553}
+  - component: {fileID: -5379906420666238233}
   m_Layer: 0
   m_Name: Carpark
   m_TagString: standardTag
@@ -33,6 +34,19 @@ Transform:
   - {fileID: 6802360247104595324}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5379906420666238233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952269403355519311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0947dc477876b764ab116371af7e85c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taken: 0
 --- !u!1 &3288680034983787090
 GameObject:
   m_ObjectHideFlags: 0

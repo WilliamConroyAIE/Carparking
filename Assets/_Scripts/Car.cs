@@ -211,7 +211,6 @@ public class Car : MonoBehaviour
         Quaternion rot;
         collider.GetWorldPose(out pos, out rot);
         mesh.position = pos;
-        mesh.rotation = rot; // or -90, depending on your mesh's orientation
     }
 
     private int currentIndex = 0;
