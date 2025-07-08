@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2647327391808830476}
   - component: {fileID: 1555094811034808351}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 472282315762395653}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.597994, y: 1.3300004, z: -2.535514}
+  m_LocalPosition: {x: 1.597994, y: 0.89, z: -2.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -42,7 +42,7 @@ WheelCollider:
   m_GameObject: {fileID: 472282315762395653}
   serializedVersion: 2
   m_Center: {x: 0, y: 0.0025, z: 0}
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -81,7 +81,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6147220962699968869}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,9 +114,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6405820487772037230}
   - component: {fileID: 3362526218031197771}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ute
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7844056798336960127}
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 4998949160841833235}
   - component: {fileID: 1623170907942350727}
   - component: {fileID: 8821693571976651197}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,13 +209,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420451126807800627}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2010709022046357092}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1623170907942350727
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -277,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4402277701072329081}
   - component: {fileID: 8015990428136262050}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,7 +293,7 @@ Transform:
   m_GameObject: {fileID: 1548815089264086442}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.5966336, y: 1.33, z: 3.387376}
+  m_LocalPosition: {x: 1.5966336, y: 0.8899996, z: 3.3528903}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -309,7 +309,7 @@ WheelCollider:
   m_GameObject: {fileID: 1548815089264086442}
   serializedVersion: 2
   m_Center: {x: 0, y: 0.0025, z: 0}
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -349,7 +349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8610667558218767509}
   - component: {fileID: 5230223068669909957}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ Transform:
   m_GameObject: {fileID: 1725754353612708320}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.5798252, y: 1.3300006, z: -2.535516}
+  m_LocalPosition: {x: -1.5798252, y: 0.8900002, z: -2.5900018}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -381,7 +381,7 @@ WheelCollider:
   m_GameObject: {fileID: 1725754353612708320}
   serializedVersion: 2
   m_Center: {x: 0, y: 0.0025, z: 0}
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -422,7 +422,7 @@ GameObject:
   - component: {fileID: 852975376218084261}
   - component: {fileID: 6078959836788962833}
   - component: {fileID: 3730736660576894879}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,13 +437,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1901208026910553623}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6352814308375113668}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6078959836788962833
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 1377071424876476963}
   - component: {fileID: 9200839334154262961}
   - component: {fileID: 2513133843113757943}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FL (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,13 +521,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2805146849066396663}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4296747357650604640}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9200839334154262961
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -590,7 +590,7 @@ GameObject:
   - component: {fileID: 8680787572470456745}
   - component: {fileID: 6182312362714847574}
   - component: {fileID: 1481496169346668731}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -605,13 +605,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2842676845670484153}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6147220962699968869}
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6182312362714847574
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -672,7 +672,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6352814308375113668}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -705,7 +705,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1126210464039127294}
   - component: {fileID: 2945135808155901444}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,7 +721,7 @@ Transform:
   m_GameObject: {fileID: 5561839665244528333}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.596223, y: 1.33, z: 3.387376}
+  m_LocalPosition: {x: -1.596223, y: 0.8899996, z: 3.3528903}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -737,7 +737,7 @@ WheelCollider:
   m_GameObject: {fileID: 5561839665244528333}
   serializedVersion: 2
   m_Center: {x: 0, y: 0.0025, z: 0}
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -778,7 +778,7 @@ GameObject:
   - component: {fileID: 7844056798336960127}
   - component: {fileID: 224359623790909446}
   - component: {fileID: 3212589188212501515}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -861,7 +861,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2010709022046357092}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -893,7 +893,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4296747357650604640}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FL (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

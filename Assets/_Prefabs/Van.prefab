@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1965732864569533}
   - component: {fileID: 4570548935915295731}
   - component: {fileID: 6855542537743506814}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9106714877094824332}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 204937795271546620}
   - component: {fileID: 364220871894565784}
   - component: {fileID: 5421157242818850791}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 175, y: 175, z: 175}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4893883178095121704}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 7888234213806130408}
   - component: {fileID: 1559009464544785181}
   - component: {fileID: 4602955597863198890}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 175, y: 175, z: 175}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4642751339234701653}
@@ -317,8 +317,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4482724842609468535}
-  - component: {fileID: 3363937752090564590}
-  m_Layer: 0
+  - component: {fileID: 4693023422845505181}
+  m_Layer: 3
   m_Name: FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +341,7 @@ Transform:
   - {fileID: 8458995041644874363}
   m_Father: {fileID: 2670471215000096854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!146 &3363937752090564590
+--- !u!146 &4693023422845505181
 WheelCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,14 +350,14 @@ WheelCollider:
   m_GameObject: {fileID: 1021848188842849616}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.6
+  m_Radius: 0.5
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0
   m_ForceAppPointDistance: 0
-  m_Mass: 1
+  m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
@@ -389,7 +389,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4893883178095121704}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,9 +422,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2670471215000096854}
   - component: {fileID: 1321069394096659225}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Van
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -439,7 +439,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 967569630997127316}
@@ -471,10 +471,10 @@ MonoBehaviour:
   rightSide: 0
   frontSide: 0
   backSide: 0
-  wheelFL: {fileID: 3363937752090564590}
-  wheelFR: {fileID: 4466191936078963857}
-  wheelRL: {fileID: 4145883853886932726}
-  wheelRR: {fileID: 8611118227212139671}
+  wheelFL: {fileID: 0}
+  wheelFR: {fileID: 0}
+  wheelRL: {fileID: 0}
+  wheelRR: {fileID: 0}
   meshFL: {fileID: 8458995041644874363}
   meshFR: {fileID: 9106714877094824332}
   meshRL: {fileID: 4642751339234701653}
@@ -500,8 +500,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5434158659766815447}
-  - component: {fileID: 4145883853886932726}
-  m_Layer: 0
+  - component: {fileID: 4251993993844883840}
+  m_Layer: 3
   m_Name: RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -524,7 +524,7 @@ Transform:
   - {fileID: 4642751339234701653}
   m_Father: {fileID: 2670471215000096854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!146 &4145883853886932726
+--- !u!146 &4251993993844883840
 WheelCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -533,14 +533,14 @@ WheelCollider:
   m_GameObject: {fileID: 3326738948310836818}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.6
+  m_Radius: 0.5
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0
   m_ForceAppPointDistance: 0
-  m_Mass: 1
+  m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 5893003261509053763}
   - component: {fileID: 5004872661050691752}
   - component: {fileID: 260281058276576315}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +591,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 175, y: 175, z: 175}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9106714877094824332}
@@ -656,8 +656,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2013802677614068326}
-  - component: {fileID: 4466191936078963857}
-  m_Layer: 0
+  - component: {fileID: 8239753796834945820}
+  m_Layer: 3
   m_Name: FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,7 +680,7 @@ Transform:
   - {fileID: 9106714877094824332}
   m_Father: {fileID: 2670471215000096854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!146 &4466191936078963857
+--- !u!146 &8239753796834945820
 WheelCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -689,14 +689,14 @@ WheelCollider:
   m_GameObject: {fileID: 4921288072080970470}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.6
+  m_Radius: 0.5
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0
   m_ForceAppPointDistance: 0
-  m_Mass: 1
+  m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
@@ -728,8 +728,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9030113388529428194}
-  - component: {fileID: 8611118227212139671}
-  m_Layer: 0
+  - component: {fileID: 1338331844181000811}
+  m_Layer: 3
   m_Name: RR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,7 +752,7 @@ Transform:
   - {fileID: 4893883178095121704}
   m_Father: {fileID: 2670471215000096854}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!146 &8611118227212139671
+--- !u!146 &1338331844181000811
 WheelCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -761,14 +761,14 @@ WheelCollider:
   m_GameObject: {fileID: 6350671212345206508}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.6
+  m_Radius: 0.5
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
     targetPosition: 0.5
   m_SuspensionDistance: 0
   m_ForceAppPointDistance: 0
-  m_Mass: 1
+  m_Mass: 20
   m_WheelDampingRate: 0.25
   m_ForwardFriction:
     m_ExtremumSlip: 0.4
@@ -800,7 +800,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4642751339234701653}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -834,7 +834,7 @@ GameObject:
   - component: {fileID: 5484804025995277329}
   - component: {fileID: 6695706032993680362}
   - component: {fileID: 4771778836353864699}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FL (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,7 +851,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 175, y: 175, z: 175}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8458995041644874363}
@@ -916,7 +916,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8458995041644874363}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FL (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

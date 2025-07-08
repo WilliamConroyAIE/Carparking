@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7881158497448665644}
   - component: {fileID: 6235569697803447017}
   - component: {fileID: 7902736052217578144}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 8162476473031795741}
   - component: {fileID: 1819777226569249849}
   - component: {fileID: 4470258085658487835}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelP-2 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2245545898712066605}
   - component: {fileID: 612551473035530175}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ WheelCollider:
   m_GameObject: {fileID: 2855686726454386183}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.75
+  m_Radius: 0.7
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -273,7 +273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5586553518397432906}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelP-1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5073196241453585770}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelP-3 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6772887554857546869}
   - component: {fileID: 5626946502738904810}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4298405850306322588}
   - component: {fileID: 5664963398534926250}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel Collider FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ WheelCollider:
   m_GameObject: {fileID: 6272068787716544587}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.75
+  m_Radius: 0.7
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -481,7 +481,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 909670239160380581}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel Parent FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +513,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1158794319581112769}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelP-2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -546,7 +546,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2838276051558463456}
   - component: {fileID: 4903318796197757957}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +578,7 @@ WheelCollider:
   m_GameObject: {fileID: 6878496791012669027}
   serializedVersion: 2
   m_Center: {x: 0, y: 0, z: 0}
-  m_Radius: 0.75
+  m_Radius: 0.7
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -619,9 +619,9 @@ GameObject:
   - component: {fileID: 2587218999284435180}
   - component: {fileID: 2593996037480285723}
   - component: {fileID: 5435799511146361415}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Rozzas
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -636,7 +636,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5063253773362849014}
@@ -726,7 +726,7 @@ GameObject:
   - component: {fileID: 8127280437830242633}
   - component: {fileID: 426211372036465184}
   - component: {fileID: 3040709229318936825}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelP-1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 2689949728066866564}
   - component: {fileID: 2083605576236523114}
   - component: {fileID: 7941200949005257183}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelP-3 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -894,7 +894,7 @@ GameObject:
   - component: {fileID: 7940445582633905598}
   - component: {fileID: 7295294565178074146}
   - component: {fileID: 4468290445344739167}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wheel Mesh FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}

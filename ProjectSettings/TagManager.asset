@@ -3,12 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - standardTag
+  - disabledTag
+  - parkingTag
+  - spawnerTag
+  - Car
+  - Bus
+  - Truck
+  - waypointTag
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Vehicle
   - Water
   - UI
   - 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4048075135130237037}
   - component: {fileID: 7909163436898261291}
   - component: {fileID: 1412905070250550178}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 724651801428081129}
   - component: {fileID: 8386880819960409167}
   - component: {fileID: 8567701281781203240}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 4570019962432102477}
   - component: {fileID: 924832103290782480}
   - component: {fileID: 129060270890646557}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelT2-2 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ Transform:
   m_GameObject: {fileID: 1722867916561683882}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1.7763566e-15, w: 1}
-  m_LocalPosition: {x: -0.016788205, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0168, y: 0.0024, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -264,7 +264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1304485829690364860}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4906284838776923684}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 4287301242874104578}
   - component: {fileID: 3261560744795889437}
   - component: {fileID: 4700715220761615016}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelT2-7 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ Transform:
   m_GameObject: {fileID: 3962670738756029502}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1.7763566e-15, w: 1}
-  m_LocalPosition: {x: 0.012855813, y: 0, z: 0}
+  m_LocalPosition: {x: 0.0128, y: 0.0024, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -413,7 +413,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2212789614992207088}
   - component: {fileID: 591484592670136869}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7716145227737127300}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1018230996915642453}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR P
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 4429621607384357095}
   - component: {fileID: 821811620774300447}
   - component: {fileID: 6083351867894271744}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Truck 2 Cargo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +632,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3416512633292071382}
   - component: {fileID: 2150623540974788066}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -705,7 +705,7 @@ GameObject:
   - component: {fileID: 4508542363276100548}
   - component: {fileID: 3304082158409748528}
   - component: {fileID: 1360159571644702999}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -789,7 +789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 769690929702602632}
   - component: {fileID: 2548132721679010411}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -862,7 +862,7 @@ GameObject:
   - component: {fileID: 7613329936846415624}
   - component: {fileID: 5653317350337148149}
   - component: {fileID: 2579884701987803041}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FR M
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -947,9 +947,9 @@ GameObject:
   - component: {fileID: 4925884467176513593}
   - component: {fileID: 6486879507690877023}
   - component: {fileID: 8494802637038674517}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Fluid Truck
-  m_TagString: Untagged
+  m_TagString: Truck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -964,7 +964,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 724651801428081129}
@@ -1051,7 +1051,7 @@ GameObject:
   - component: {fileID: 6231120174000247182}
   - component: {fileID: 3391718418448384327}
   - component: {fileID: 7509262088058486012}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelT2-3 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1067,7 +1067,7 @@ Transform:
   m_GameObject: {fileID: 5815969387726454429}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1.7763566e-15, w: 1}
-  m_LocalPosition: {x: 0.012855795, y: 0, z: 0}
+  m_LocalPosition: {x: 0.0128, y: 0.0024, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1135,7 +1135,7 @@ GameObject:
   - component: {fileID: 5205077286647281431}
   - component: {fileID: 6479459042782499975}
   - component: {fileID: 6672858622967180571}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WheelT2-6 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1151,7 +1151,7 @@ Transform:
   m_GameObject: {fileID: 6709776941354155934}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1.7763566e-15, w: 1}
-  m_LocalPosition: {x: -0.016788201, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0168, y: 0.0024, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1218,7 +1218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 829258665906937314}
   - component: {fileID: 3881221213547356021}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1291,7 +1291,7 @@ GameObject:
   - component: {fileID: 8840640957378394346}
   - component: {fileID: 2701612944970608033}
   - component: {fileID: 1871743908714440534}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RL M
   m_TagString: Untagged
   m_Icon: {fileID: 0}

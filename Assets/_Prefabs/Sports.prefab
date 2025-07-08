@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1451093743556437092}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RearLeft (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 610511539720197455}
   - component: {fileID: 8111233862432192537}
   - component: {fileID: 1600790777235724278}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RearLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ WheelCollider:
   m_GameObject: {fileID: 504917471886973251}
   serializedVersion: 2
   m_Center: {x: 0, y: 0.0025, z: 0}
-  m_Radius: 0.4
+  m_Radius: 0.75
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 6779913984751836144}
   - component: {fileID: 5536922417672075466}
   - component: {fileID: 2207558724591571507}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RearRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ WheelCollider:
   m_GameObject: {fileID: 1076592201506685982}
   serializedVersion: 2
   m_Center: {x: 0, y: 0.0025, z: 0}
-  m_Radius: 0.4
+  m_Radius: 0.75
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -291,7 +291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7757035292574668169}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FrontLeft (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 8768772062312643372}
   - component: {fileID: 6317211844310717286}
   - component: {fileID: 3581540427446200267}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FrontLeft (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 180, y: 180, z: 180}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7757035292574668169}
@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 358190694774313698}
   - component: {fileID: 6863957364892867438}
   - component: {fileID: 4641187040972155544}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -558,7 +558,7 @@ GameObject:
   - component: {fileID: 2136049993333494021}
   - component: {fileID: 1668481133022298976}
   - component: {fileID: 4019899903676934378}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,7 +641,7 @@ WheelCollider:
   m_GameObject: {fileID: 4103567620919744631}
   serializedVersion: 2
   m_Center: {x: 0, y: 0.0025, z: 0}
-  m_Radius: 0.4
+  m_Radius: 0.75
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 3704242855165438930}
   - component: {fileID: 5680523780554074794}
   - component: {fileID: 7918513646273443040}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RearLeft (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -699,7 +699,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 180, y: 180, z: 180}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1451093743556437092}
@@ -767,7 +767,7 @@ GameObject:
   - component: {fileID: 3285786253089335543}
   - component: {fileID: 7934013740274813478}
   - component: {fileID: 4227087812619348098}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -850,7 +850,7 @@ WheelCollider:
   m_GameObject: {fileID: 5448407215773754287}
   serializedVersion: 2
   m_Center: {x: 0, y: 0.0025, z: 0}
-  m_Radius: 0.4
+  m_Radius: 0.75
   m_SuspensionSpring:
     spring: 35000
     damper: 4500
@@ -891,9 +891,9 @@ GameObject:
   - component: {fileID: 3224442859755815886}
   - component: {fileID: 2742214402519370779}
   - component: {fileID: 2279176248846612819}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sports
-  m_TagString: Untagged
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -908,7 +908,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4621691843280076917}
@@ -996,7 +996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7154533432437951087}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FrontRight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1030,7 +1030,7 @@ GameObject:
   - component: {fileID: 3802899635826442087}
   - component: {fileID: 7984995712476039653}
   - component: {fileID: 5695077730250287876}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FrontRight (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1047,7 +1047,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 180, y: 180, z: 180}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7154533432437951087}
@@ -1112,7 +1112,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1240871200844154843}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RearRight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 6526921194543714422}
   - component: {fileID: 5223808636722153824}
   - component: {fileID: 5646495960970684213}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RearRight (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1163,7 +1163,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 180, y: 180, z: 180}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1240871200844154843}

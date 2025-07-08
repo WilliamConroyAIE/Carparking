@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ParkingArray : MonoBehaviour
 {
+    public int parkingSpotTotal;
+
     [Header("Prefabs")]
     public GameObject carParkingSpot;
     public GameObject disabledParkingSpot;
@@ -14,7 +16,7 @@ public class ParkingArray : MonoBehaviour
     public List<GameObject> availableDisabled;
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GameObject[] sParks = GameObject.FindGameObjectsWithTag("standardTag");
         foreach(GameObject s in sParks)
@@ -25,11 +27,12 @@ public class ParkingArray : MonoBehaviour
         foreach(GameObject d in dParks)
             availableDisabled.Add(d);
 
+        GameObject[] tWaypoints = GameObject.FindGameObjectsWithTag("waypointTag");
+        foreach(GameObject t in tWaypoints)
+            parkingWaypoints.Add(t.transform);
+
+
+        parkingSpotTotal = (availableStandard.Count) + (availableDisabled.Count);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
