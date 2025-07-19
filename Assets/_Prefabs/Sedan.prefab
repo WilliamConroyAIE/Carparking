@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8404966537055806178}
   - component: {fileID: 5312053658560874959}
   - component: {fileID: 7395753889967143960}
-  - component: {fileID: 3396244973264205855}
+  - component: {fileID: 8780247982207542961}
   m_Layer: 3
   m_Name: Car1Wheel-RR
   m_TagString: Untagged
@@ -28,11 +28,11 @@ Transform:
   m_GameObject: {fileID: 1577558166301534707}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6354234, y: 0.201, z: -1.0860868}
+  m_LocalPosition: {x: 0.6354234, y: 0.3, z: -1.0860868}
   m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 0.90000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3976543702203332352}
+  m_Father: {fileID: 736662646883500844}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5312053658560874959
 MeshFilter:
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3396244973264205855
-MeshCollider:
+--- !u!135 &8780247982207542961
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,11 +102,10 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8886197208045172510, guid: e1f70da310c89f1469d227c6e0a6fc5d, type: 3}
---- !u!1 &5381687782327994994
+  serializedVersion: 3
+  m_Radius: 0.2778745
+  m_Center: {x: -0.0013188386, y: 0, z: -0.0000001192093}
+--- !u!1 &3507733567451840770
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,28 +113,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3976543702203332352}
-  - component: {fileID: 394243477142803293}
-  - component: {fileID: 4707224363388508611}
-  - component: {fileID: 1836354644978492632}
-  - component: {fileID: 3297037551498453589}
-  - component: {fileID: 4423593115856753616}
+  - component: {fileID: 736662646883500844}
+  - component: {fileID: 7309368947799946153}
+  - component: {fileID: 1346277521969451551}
+  - component: {fileID: 2288400018949525595}
   m_Layer: 3
-  m_Name: Sedan
+  m_Name: Meshes
   m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3976543702203332352
+--- !u!4 &736662646883500844
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5381687782327994994}
+  m_GameObject: {fileID: 3507733567451840770}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -144,23 +141,23 @@ Transform:
   - {fileID: 4935365701438492358}
   - {fileID: 700517349131261172}
   - {fileID: 8404966537055806178}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 3976543702203332352}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &394243477142803293
+--- !u!33 &7309368947799946153
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5381687782327994994}
+  m_GameObject: {fileID: 3507733567451840770}
   m_Mesh: {fileID: 1540178548843688688, guid: e1f70da310c89f1469d227c6e0a6fc5d, type: 3}
---- !u!23 &4707224363388508611
+--- !u!23 &1346277521969451551
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5381687782327994994}
+  m_GameObject: {fileID: 3507733567451840770}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -196,13 +193,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1836354644978492632
+--- !u!64 &2288400018949525595
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5381687782327994994}
+  m_GameObject: {fileID: 3507733567451840770}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -218,6 +215,40 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 1540178548843688688, guid: e1f70da310c89f1469d227c6e0a6fc5d, type: 3}
+--- !u!1 &5381687782327994994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3976543702203332352}
+  - component: {fileID: 3297037551498453589}
+  - component: {fileID: 4423593115856753616}
+  m_Layer: 3
+  m_Name: Sedan
+  m_TagString: Car
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3976543702203332352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381687782327994994}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 736662646883500844}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3297037551498453589
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -257,8 +288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c889b7aa6839dca4aa67c2df90c5fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 3976543702203332352}
   currentType: 1
+  parkingOutDistance: 6.25
   leftSideClearance: 0
   rightSideClearance: 0
   frontClearance: 0
@@ -287,7 +318,7 @@ GameObject:
   - component: {fileID: 3397611293205492895}
   - component: {fileID: 4182486642319838243}
   - component: {fileID: 4987178067649985087}
-  - component: {fileID: 6028022575280015402}
+  - component: {fileID: 7244800429661161127}
   m_Layer: 3
   m_Name: Car1Wheel-FL
   m_TagString: Untagged
@@ -304,11 +335,11 @@ Transform:
   m_GameObject: {fileID: 5447095335672482228}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.63542414, y: 0.201, z: 1.4204884}
+  m_LocalPosition: {x: -0.63542414, y: 0.3, z: 1.4204884}
   m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 0.90000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3976543702203332352}
+  m_Father: {fileID: 736662646883500844}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4182486642319838243
 MeshFilter:
@@ -360,8 +391,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6028022575280015402
-MeshCollider:
+--- !u!135 &7244800429661161127
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -378,10 +409,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1519392375299387366, guid: e1f70da310c89f1469d227c6e0a6fc5d, type: 3}
+  serializedVersion: 3
+  m_Radius: 0.2778745
+  m_Center: {x: 0.0013184884, y: 0, z: -0.0000001192093}
 --- !u!1 &6660799702292272991
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +423,7 @@ GameObject:
   - component: {fileID: 700517349131261172}
   - component: {fileID: 954906967928072123}
   - component: {fileID: 5350162895499674517}
-  - component: {fileID: 5529293534848661001}
+  - component: {fileID: 1231791903945957519}
   m_Layer: 3
   m_Name: Car1Wheel-RL
   m_TagString: Untagged
@@ -410,11 +440,11 @@ Transform:
   m_GameObject: {fileID: 6660799702292272991}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6354234, y: 0.201, z: -1.0860875}
+  m_LocalPosition: {x: -0.6354234, y: 0.3, z: -1.0860875}
   m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 0.90000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3976543702203332352}
+  m_Father: {fileID: 736662646883500844}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &954906967928072123
 MeshFilter:
@@ -466,8 +496,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5529293534848661001
-MeshCollider:
+--- !u!135 &1231791903945957519
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -484,10 +514,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8730079456677457307, guid: e1f70da310c89f1469d227c6e0a6fc5d, type: 3}
+  serializedVersion: 3
+  m_Radius: 0.2778745
+  m_Center: {x: 0.0013188982, y: -0.000000029802326, z: 0.0000001192093}
 --- !u!1 &7090548002118360300
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +528,7 @@ GameObject:
   - component: {fileID: 4935365701438492358}
   - component: {fileID: 6179971994023516873}
   - component: {fileID: 8805549556985665188}
-  - component: {fileID: 2171667778325835402}
+  - component: {fileID: 1758337795237043650}
   m_Layer: 3
   m_Name: Car1Wheel-FR
   m_TagString: Untagged
@@ -516,11 +545,11 @@ Transform:
   m_GameObject: {fileID: 7090548002118360300}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.63542295, y: 0.201, z: 1.420488}
+  m_LocalPosition: {x: 0.63542295, y: 0.3, z: 1.420488}
   m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 0.90000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3976543702203332352}
+  m_Father: {fileID: 736662646883500844}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6179971994023516873
 MeshFilter:
@@ -572,8 +601,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2171667778325835402
-MeshCollider:
+--- !u!135 &1758337795237043650
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -590,7 +619,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4543054715967934388, guid: e1f70da310c89f1469d227c6e0a6fc5d, type: 3}
+  serializedVersion: 3
+  m_Radius: 0.2778745
+  m_Center: {x: -0.0013187231, y: 0, z: 0.0000001192093}

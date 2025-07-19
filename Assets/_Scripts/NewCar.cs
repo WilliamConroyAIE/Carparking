@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class NewCar : MonoBehaviour
 {
-    [Header("Model and Type")]
-    public Transform model;
+    private Rigidbody rb;
 
     public enum carType { taxi, sedan, suv, van, ute, sport, rozzas }
     public carType currentType;
+    public float parkingOutDistance = 6f;
 
     [Header("Clearances")]
     public float leftSideClearance;
@@ -48,6 +48,8 @@ public class NewCar : MonoBehaviour
 
     void Awake()
     {
+        rb = GetComponent<Rigidbody>();
+            
         switch (currentType)
         {
             case carType.taxi:   SetSides(-1.08f, 2.69f, -2.7f); break;
@@ -108,6 +110,21 @@ public class NewCar : MonoBehaviour
     {
         if (!movingToPark) return;
 
+        vehicleList.Clear(); // Add this at the start to prevent growth
+
+        GameObject[] cars = GameObject.FindGameObjectsWithTag("Car");
+        foreach(GameObject c in cars)
+            vehicleList.Add(c);
+
+        GameObject[] buses = GameObject.FindGameObjectsWithTag("Bus");
+        foreach(GameObject b in buses)
+            vehicleList.Add(b);
+
+        GameObject[] trucks = GameObject.FindGameObjectsWithTag("Truck");
+        foreach(GameObject t in trucks)
+            vehicleList.Add(t);
+
+
         if (readyToMove)
             CheckingDistances();
     }
@@ -115,6 +132,13 @@ public class NewCar : MonoBehaviour
     void CheckingDistances()
     {
         float distanceToPark = Vector3.Distance(transform.position, chosenPark.position);
+
+        // NEW: Immediately go to park if within 1f, regardless of next waypoint
+        if (distanceToPark <= parkingOutDistance)
+        {
+            MoveToParkingSpot();
+            return;
+        }
 
         if (currentIndex >= waypoints.Count)
         {
@@ -130,6 +154,7 @@ public class NewCar : MonoBehaviour
         else
             MoveToParkingSpot();
     }
+
 
     void MoveToNextPoint(Transform nextPoint)
     {
@@ -158,20 +183,40 @@ public class NewCar : MonoBehaviour
 
         if (dist < 0.2f)
         {
-            // Only rotate in Y axis
             Quaternion flatTargetRot = Quaternion.Euler(0f, chosenPark.rotation.eulerAngles.y, 0f);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, flatTargetRot, rotationSpeed * Time.deltaTime);
+
+            // Only rotate in Y axis
+            Quaternion currentFlatRot = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+            Quaternion targetFlatRot = Quaternion.Euler(0f, chosenPark.rotation.eulerAngles.y, 0f);
+            transform.rotation = Quaternion.RotateTowards(currentFlatRot, targetFlatRot, rotationSpeed * Time.deltaTime);
 
             float angleDiff = Quaternion.Angle(transform.rotation, flatTargetRot);
 
             if (angleDiff < 1f)
             {
+                // --- Replace this section with a snap ---
+                transform.position = chosenPark.position;
+                transform.rotation = Quaternion.Euler(0f, chosenPark.rotation.eulerAngles.y, 0f);
+
                 if (disabled) pA.availableDisabled.Remove(chosenPark.gameObject);
                 else pA.availableStandard.Remove(chosenPark.gameObject);
 
                 currentSpeed = 0f;
                 targetSpeed = 0f;
                 movingToPark = false;
+
+                if (rb != null)
+                {
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.constraints = RigidbodyConstraints.FreezeAll;
+                }
+
+                leftSideClearance = 0;
+                rightSideClearance = 0;
+                frontClearance = 0;
+                backClearance = 0;
+
                 this.enabled = false;
             }
         }
@@ -218,16 +263,36 @@ public class NewCar : MonoBehaviour
 
     public bool CanMoveTo(Vector3 proposedPosition)
     {
+        if (vehicleList == null || vehicleList.Count <= 1)
+            return true;
+
         foreach (GameObject otherGO in vehicleList)
         {
+            if (otherGO == null || otherGO == gameObject || !otherGO.activeInHierarchy)
+                continue;
+
             Transform other = otherGO.transform;
-            if (other == transform) continue;
 
             carTrue = busTrue = truckTrue = false;
 
-            if (other.CompareTag("Car")) { carTrue = true; oCar = other.GetComponent<NewCar>(); }
-            else if (other.CompareTag("Bus")) { busTrue = true; oBus = other.GetComponent<NewBus>(); }
-            else if (other.CompareTag("Truck")) { truckTrue = true; oTruck = other.GetComponent<NewTruck>(); }
+            if (other.CompareTag("Car"))
+            {
+                oCar = other.GetComponent<NewCar>();
+                if (oCar == null) continue;
+                carTrue = true;
+            }
+            else if (other.CompareTag("Bus"))
+            {
+                oBus = other.GetComponent<NewBus>();
+                if (oBus == null) continue;
+                busTrue = true;
+            }
+            else if (other.CompareTag("Truck"))
+            {
+                oTruck = other.GetComponent<NewTruck>();
+                if (oTruck == null) continue;
+                truckTrue = true;
+            }
 
             float ourLeft = proposedPosition.x + leftSideClearance;
             float ourRight = proposedPosition.x + rightSideClearance;
@@ -264,9 +329,17 @@ public class NewCar : MonoBehaviour
             bool overlapX = !(ourRight < theirLeft || ourLeft > theirRight);
             bool overlapZ = !(ourFront < theirBack || ourBack > theirFront);
 
-            if (overlapX && overlapZ) return false;
+            if (overlapX && overlapZ)
+                return false;
         }
 
         return true;
+    }
+
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, parkingOutDistance);
     }
 }
