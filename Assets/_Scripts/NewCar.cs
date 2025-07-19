@@ -5,6 +5,8 @@ using UnityEngine;
 public class NewCar : MonoBehaviour
 {
     private Rigidbody rb;
+    private ResultPrinter rP;
+    private GameObject rPGO;
 
     public enum carType { taxi, sedan, suv, van, ute, sport, rozzas }
     public carType currentType;
@@ -65,6 +67,10 @@ public class NewCar : MonoBehaviour
         rightSideClearance = rightSide - 0.5f;
         frontClearance = frontSide + 0.25f;
         backClearance = backSide;
+
+        rPGO = GameObject.FindWithTag("printerTag");
+        rP = rPGO.GetComponent<ResultPrinter>();
+        rP.addVehicleToaVehicles(this.gameObject);
     }
 
     public void StartDriving(List<Transform> path, ParkingArray parkingArray, CarSpawner spawner)

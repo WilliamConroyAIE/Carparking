@@ -14348,7 +14348,7 @@ GameObject:
   - component: {fileID: 875214716}
   m_Layer: 0
   m_Name: ResultPrinter
-  m_TagString: Untagged
+  m_TagString: printerTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14365,6 +14365,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f651ba1eaf8b81148bd45ba3ac35c28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cS: {fileID: 1647853383}
+  aVehicles: []
+  areCarsParked: 
+  currentPositions: []
+  priorPositions: []
+  currentRotations: []
+  priorRotations: []
 --- !u!4 &875214717
 Transform:
   m_ObjectHideFlags: 0

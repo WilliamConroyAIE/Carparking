@@ -7,6 +7,9 @@ public class NewBus : MonoBehaviour
     [Header("Model")]
     public Transform model;
 
+    private ResultPrinter rP;
+    private GameObject rPGO;
+
     [Header("Clearances")]
     public float leftSideClearance;
     public float rightSideClearance, frontClearance, backClearance;
@@ -51,6 +54,10 @@ public class NewBus : MonoBehaviour
         rightSideClearance = model.localPosition.x + rightSide - 0.5f;
         frontClearance = model.localPosition.z + frontSide + 0.25f;
         backClearance = model.localPosition.z + backSide;
+
+        rPGO = GameObject.FindWithTag("printerTag");
+        rP = rPGO.GetComponent<ResultPrinter>();
+        rP.addVehicleToaVehicles(this.gameObject);
     }
 
     void Update()

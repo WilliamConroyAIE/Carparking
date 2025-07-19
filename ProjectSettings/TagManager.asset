@@ -12,6 +12,7 @@ TagManager:
   - Bus
   - Truck
   - waypointTag
+  - printerTag
   layers:
   - Default
   - TransparentFX
