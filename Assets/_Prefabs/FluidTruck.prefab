@@ -625,7 +625,6 @@ GameObject:
   - component: {fileID: 7810389412269028051}
   - component: {fileID: 7508229481312801916}
   - component: {fileID: 1870532393670003786}
-  - component: {fileID: 5581835101821334677}
   m_Layer: 3
   m_Name: Truck
   m_TagString: Untagged
@@ -652,6 +651,7 @@ Transform:
   - {fileID: 7689853395485921679}
   - {fileID: 4162291611852050612}
   - {fileID: 2605471119364959091}
+  - {fileID: 8677343767332111446}
   m_Father: {fileID: 1212314297915073773}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7810389412269028051
@@ -726,33 +726,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: e9d96ffec57c82c4face56ee1063eb87, type: 3}
---- !u!54 &5581835101821334677
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3025205020927347630}
-  serializedVersion: 4
-  m_Mass: 2500
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!1 &3756200123651244878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,7 +1156,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8677343767332111446}
-  - component: {fileID: 6467667169922167728}
   m_Layer: 3
   m_Name: TrailerRig
   m_TagString: Untagged
@@ -1200,40 +1172,13 @@ Transform:
   m_GameObject: {fileID: 7838254199442025293}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.21, z: -2.87}
+  m_LocalPosition: {x: 0, y: -0.65999985, z: -2.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6937752199673532501}
-  m_Father: {fileID: 1212314297915073773}
+  m_Father: {fileID: 7048230953807031047}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &6467667169922167728
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7838254199442025293}
-  serializedVersion: 4
-  m_Mass: 2500
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!1 &8163096355670567223
 GameObject:
   m_ObjectHideFlags: 0
@@ -1569,6 +1514,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1212314297915073773}
   - component: {fileID: 7784211593401406154}
+  - component: {fileID: 8461020533049893763}
+  - component: {fileID: -7926331055647857940}
   m_Layer: 3
   m_Name: FluidTruck
   m_TagString: Truck
@@ -1586,11 +1533,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7048230953807031047}
-  - {fileID: 8677343767332111446}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7784211593401406154
@@ -1605,7 +1551,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e7a9b5ac10622498e3ba028c6c4697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 1212314297915073773}
   leftSideClearance: 0
   rightSideClearance: 0
   frontClearance: 0
@@ -1622,6 +1567,60 @@ MonoBehaviour:
   maxSpeed: 10
   disabled: 0
   vehicleList: []
+  sphereRadius: 1.75
+  sphereForwardOffset: 5.2
+  sphereHeightOffset: 1.75
+  vehicleMask:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!54 &8461020533049893763
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158927674592021908}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &-7926331055647857940
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158927674592021908}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1, z: 4.75}
 --- !u!1 &9192083025590196211
 GameObject:
   m_ObjectHideFlags: 0

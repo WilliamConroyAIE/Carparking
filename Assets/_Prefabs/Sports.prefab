@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c889b7aa6839dca4aa67c2df90c5fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snapBuffer: 0.05
   currentType: 5
   parkingOutDistance: 6.25
   leftSideClearance: 0
@@ -65,6 +66,13 @@ MonoBehaviour:
   disabled: 0
   chosenPark: {fileID: 0}
   vehicleList: []
+  parked: 0
+  sphereRadius: 1
+  sphereForwardOffset: 3
+  sphereHeightOffset: 1
+  vehicleMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!54 &8785586147343188076
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -104,7 +112,7 @@ GameObject:
   - component: {fileID: 5529832718091643269}
   - component: {fileID: 4303179883253309348}
   - component: {fileID: 6537503205279713556}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Car2Wheel-RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +218,7 @@ GameObject:
   - component: {fileID: 5784050311341219802}
   - component: {fileID: 476264159598117346}
   - component: {fileID: 3223932532408642060}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Car2Wheel-RR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,9 +324,9 @@ GameObject:
   - component: {fileID: 6309219122284060227}
   - component: {fileID: 1879361358723783576}
   - component: {fileID: 7941806702773143901}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Meshes
-  m_TagString: Car
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -426,7 +434,7 @@ GameObject:
   - component: {fileID: 2008191242161721252}
   - component: {fileID: 5945767389046974677}
   - component: {fileID: 6499844241548821931}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Car2Wheel-FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +540,7 @@ GameObject:
   - component: {fileID: 678404601150292654}
   - component: {fileID: 7352648808110098960}
   - component: {fileID: 6143807049370439489}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Car2Wheel-FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}

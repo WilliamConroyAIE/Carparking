@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class NewTruck : MonoBehaviour
 {
-    [Header("Model")]
-    public Transform model;
-
     private ResultPrinter rP;
     private GameObject rPGO;
 
@@ -24,12 +21,12 @@ public class NewTruck : MonoBehaviour
     public float decelerationRate = 2f;
     public float maxSpeed = 8f;
 
-    private float currentSpeed = 0f;
+    internal float currentSpeed = 0f;
     private float targetSpeed = 0f;
 
     [Header("State & References")]
     public bool disabled;
-    private bool movingToPark = false;
+    internal bool movingToPark = false;
     private int currentIndex = 0;
     private Transform targetWaypoint;
     private List<Transform> waypoints;
@@ -46,14 +43,23 @@ public class NewTruck : MonoBehaviour
     private bool firstPark;
     private float shortestDistance;
 
+    private bool hasTriggeredSpawn = false;
+
+
+    [Header("Collision CheckSphere Settings")]
+    public float sphereRadius = 1.5f;
+    public float sphereForwardOffset = 4f;
+    public float sphereHeightOffset = 1.5f;
+    public LayerMask vehicleMask;
+
     void Awake()
     {
         SetSides(-1.2f, 5f, -4f);
 
-        leftSideClearance = model.localPosition.x + leftSide + 0.5f;
-        rightSideClearance = model.localPosition.x + rightSide - 0.5f;
-        frontClearance = model.localPosition.z + frontSide + 0.25f;
-        backClearance = model.localPosition.z + backSide;
+        leftSideClearance = transform.localPosition.x + leftSide + 0.5f;
+        rightSideClearance = transform.localPosition.x + rightSide - 0.5f;
+        frontClearance = transform.localPosition.z + frontSide + 0.25f;
+        backClearance = transform.localPosition.z + backSide;
 
         rPGO = GameObject.FindWithTag("printerTag");
         rP = rPGO.GetComponent<ResultPrinter>();
@@ -65,20 +71,48 @@ public class NewTruck : MonoBehaviour
         if (!movingToPark || waypoints == null || waypoints.Count == 0) return;
 
         MoveToNextPoint(waypoints[currentIndex]);
+
+        vehicleList.Clear();
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Car"));
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Bus"));
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Truck"));
+
     }
 
     void MoveToNextPoint(Transform nextPoint)
     {
-        Vector3 direction = (nextPoint.position - transform.position).normalized;
+        Vector3 direction = nextPoint.position - transform.position;
+        direction.y = 0f; // Prevent vertical rotation
+        direction.Normalize();
+
         Vector3 proposedPosition = transform.position + direction * currentSpeed * Time.deltaTime;
 
         targetSpeed = CanMoveTo(proposedPosition) ? speed : 0f;
+        
+        if (nextPoint.position == transform.position)
+        {
+            gameObject.SetActive(false);
+        }
+
         ApplySmoothMovement(direction);
 
-        if (Vector3.Distance(transform.position, nextPoint.position) < distanceToNextWaypoint)
+        if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(nextPoint.position.x, 0, nextPoint.position.z)) < distanceToNextWaypoint)
         {
             if (currentIndex + 1 < waypoints.Count)
                 currentIndex++;
+            
+            if (currentIndex >= 18)
+                SpawnNewVehicle();
+        }
+    }
+
+    private void SpawnNewVehicle()
+    {
+        if (!hasTriggeredSpawn)
+        {
+            cS.AllowNextSpawn();
+            print(gameObject.name + "calls CarSpawner to spawn new vehicle");
+            hasTriggeredSpawn = true;
         }
     }
 
@@ -86,32 +120,42 @@ public class NewTruck : MonoBehaviour
     {
         direction.Normalize();
 
-        // Check raycast forward to avoid hitting other vehicles
-        float raycastDistance = 1.5f; // adjust as needed
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, transform.forward, out hit, raycastDistance))
-        {
-            if (hit.collider.CompareTag("Car") || hit.collider.CompareTag("Bus") || hit.collider.CompareTag("Truck"))
-            {
-                targetSpeed = 0f; // Stop if another vehicle is too close ahead
-            }
-        }
-
         if (targetSpeed > currentSpeed)
             currentSpeed += accelerationRate * Time.deltaTime;
         else if (targetSpeed < currentSpeed)
             currentSpeed -= decelerationRate * Time.deltaTime;
 
-        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
+        currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
 
-        if (direction != Vector3.zero)
+        Vector3 flatDirection = new Vector3(direction.x, 0f, direction.z).normalized;
+        if (flatDirection.sqrMagnitude > 0.001f)
         {
-            Quaternion targetRot = Quaternion.LookRotation(direction);
+            Quaternion targetRot = Quaternion.LookRotation(flatDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
         }
 
         transform.position += direction * currentSpeed * Time.deltaTime;
     }
+
+    public bool CanMoveTo(Vector3 proposedPosition)
+    {
+        Vector3 sphereCenter = proposedPosition + transform.forward * sphereForwardOffset + Vector3.up * sphereHeightOffset;
+
+        Collider[] hits = Physics.OverlapSphere(sphereCenter, sphereRadius, vehicleMask);
+        foreach (Collider col in hits)
+        {
+            if (col.gameObject == gameObject) continue;
+
+            string tag = col.tag;
+            if (tag == "Car" || tag == "Bus" || tag == "Truck")
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
 
     private void SetSides(float sideOffset, float front, float back)
@@ -122,64 +166,21 @@ public class NewTruck : MonoBehaviour
         backSide = back;
     }
 
-    public bool CanMoveTo(Vector3 proposedPosition)
-    {
-        foreach (GameObject otherGO in vehicleList)
-        {
-            Transform other = otherGO.transform;
-            if (other == transform) continue;
-
-            carTrue = busTrue = truckTrue = false;
-
-            if (other.CompareTag("Car")) { carTrue = true; oCar = other.GetComponent<NewCar>(); }
-            else if (other.CompareTag("Bus")) { busTrue = true; oBus = other.GetComponent<NewBus>(); }
-            else if (other.CompareTag("Truck")) { truckTrue = true; oTruck = other.GetComponent<NewTruck>(); }
-
-            float ourLeft = proposedPosition.x + leftSideClearance;
-            float ourRight = proposedPosition.x + rightSideClearance;
-            float ourFront = proposedPosition.z + frontClearance;
-            float ourBack = proposedPosition.z + backClearance;
-
-            float theirLeft = 0, theirRight = 0, theirFront = 0, theirBack = 0;
-
-            if (carTrue)
-            {
-                var pos = oCar.transform.position;
-                theirLeft = pos.x + oCar.leftSideClearance;
-                theirRight = pos.x + oCar.rightSideClearance;
-                theirFront = pos.z + oCar.frontClearance;
-                theirBack = pos.z + oCar.backClearance;
-            }
-            else if (busTrue)
-            {
-                var pos = oBus.transform.position;
-                theirLeft = pos.x + oBus.leftSideClearance;
-                theirRight = pos.x + oBus.rightSideClearance;
-                theirFront = pos.z + oBus.frontClearance;
-                theirBack = pos.z + oBus.backClearance;
-            }
-            else if (truckTrue)
-            {
-                var pos = oTruck.transform.position;
-                theirLeft = pos.x + oTruck.leftSideClearance;
-                theirRight = pos.x + oTruck.rightSideClearance;
-                theirFront = pos.z + oTruck.frontClearance;
-                theirBack = pos.z + oTruck.backClearance;
-            }
-
-            bool overlapX = !(ourRight < theirLeft || ourLeft > theirRight);
-            bool overlapZ = !(ourFront < theirBack || ourBack > theirFront);
-
-            if (overlapX && overlapZ) return false;
-        }
-
-        return true;
-    }
-
     public void StartDriving(List<Transform> path, ParkingArray parkingArray, CarSpawner spawner)
     {
         waypoints = path;
         pA = parkingArray;
         cS = spawner;
+
+        currentIndex = 0;
+        movingToPark = true; // <--- THIS IS WHAT'S MISSING
+    }
+
+    
+    private void OnDrawGizmosSelected()
+    {
+        Vector3 sphereCenter = transform.position + transform.forward * sphereForwardOffset + Vector3.up * sphereHeightOffset;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(sphereCenter, sphereRadius);
     }
 }

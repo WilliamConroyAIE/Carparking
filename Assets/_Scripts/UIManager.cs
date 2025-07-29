@@ -152,6 +152,8 @@ public class UIManager : MonoBehaviour
             
             cS.StartTestRun(requestedTaxi, requestedSedan, requestedSUV, requestedVan, requestedUte, requestedSport, 
                 requestedRozzas, requestedBusInt, requestedBoxTruck, requestedFluidTruck); 
+
+            onRequestPanel = false;
         }
         else
         {
@@ -413,4 +415,56 @@ public class UIManager : MonoBehaviour
     }
     
     #endregion
+
+    public void RandomizeVehicleCounts()
+    {
+        int maxSpots = pA.parkingSpotTotal;
+
+        // Randomly divide maxSpots into Standard, Disabled, Bus, and Truck counts
+        requestedStandardCarInt = Random.Range(0, maxSpots + 1);
+        int remainingAfterStandard = maxSpots - requestedStandardCarInt;
+
+        requestedDisabledCarInt = Random.Range(0, remainingAfterStandard + 1);
+        int remainingAfterDisabled = remainingAfterStandard - requestedDisabledCarInt;
+
+        requestedBusInt = Random.Range(0, remainingAfterDisabled + 1);
+        int remainingAfterBus = remainingAfterDisabled - requestedBusInt;
+
+        requestedTruckInt = remainingAfterBus;
+
+        // Now distribute car variants within total cars (standard + disabled)
+        int totalCars = requestedStandardCarInt + requestedDisabledCarInt;
+
+        // To avoid variants exceeding total cars, randomly assign with sum capped at totalCars
+        requestedTaxi = Random.Range(0, totalCars + 1);
+        requestedSedan = Random.Range(0, totalCars - requestedTaxi + 1);
+        requestedSUV = Random.Range(0, totalCars - requestedTaxi - requestedSedan + 1);
+        requestedVan = Random.Range(0, totalCars - requestedTaxi - requestedSedan - requestedSUV + 1);
+        requestedUte = Random.Range(0, totalCars - requestedTaxi - requestedSedan - requestedSUV - requestedVan + 1);
+        requestedSport = Random.Range(0, totalCars - requestedTaxi - requestedSedan - requestedSUV - requestedVan - requestedUte + 1);
+        requestedRozzas = totalCars - (requestedTaxi + requestedSedan + requestedSUV + requestedVan + requestedUte + requestedSport);
+
+        // Similarly distribute truck variants within total trucks
+        requestedBoxTruck = Random.Range(0, requestedTruckInt + 1);
+        requestedFluidTruck = requestedTruckInt - requestedBoxTruck;
+
+        // Update input fields UI to reflect these values
+        standardCarIF.text = requestedStandardCarInt.ToString();
+        disabledCarIF.text = requestedDisabledCarInt.ToString();
+        busIF.text = requestedBusInt.ToString();
+        truckIF.text = requestedTruckInt.ToString();
+
+        taxiIF.text = requestedTaxi.ToString();
+        sedanIF.text = requestedSedan.ToString();
+        suvIF.text = requestedSUV.ToString();
+        vanIF.text = requestedVan.ToString();
+        uteIF.text = requestedUte.ToString();
+        sportIF.text = requestedSport.ToString();
+        rozzasIF.text = requestedRozzas.ToString();
+
+        boxIF.text = requestedBoxTruck.ToString();
+        fluidIF.text = requestedFluidTruck.ToString();
+
+        changeToSimAllowed = true;
+    }
 }

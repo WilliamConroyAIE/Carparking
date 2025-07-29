@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4650535402717683042}
   - component: {fileID: 733116529501317417}
   - component: {fileID: 1122382512452584140}
+  - component: {fileID: 5552093391878086771}
   m_Layer: 3
   m_Name: BoxTruck
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2082958626992296959}
@@ -73,7 +74,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e7a9b5ac10622498e3ba028c6c4697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 2082958626992296959}
   leftSideClearance: 0
   rightSideClearance: 0
   frontClearance: 0
@@ -90,6 +90,33 @@ MonoBehaviour:
   maxSpeed: 10
   disabled: 0
   vehicleList: []
+  sphereRadius: 1.75
+  sphereForwardOffset: 5
+  sphereHeightOffset: 1.75
+  vehicleMask:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!65 &5552093391878086771
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2659588124962370862}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 1.44, z: 4.6}
 --- !u!1 &3194950550723414736
 GameObject:
   m_ObjectHideFlags: 0

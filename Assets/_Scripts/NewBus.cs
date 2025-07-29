@@ -4,56 +4,55 @@ using UnityEngine;
 
 public class NewBus : MonoBehaviour
 {
-    [Header("Model")]
-    public Transform model;
-
+    private Rigidbody rb;
     private ResultPrinter rP;
     private GameObject rPGO;
 
-    [Header("Clearances")]
-    public float leftSideClearance;
-    public float rightSideClearance, frontClearance, backClearance;
+    public float parkingOutDistance = 6f;
 
-    [SerializeField] private float leftSide, rightSide, frontSide, backSide;
+    [Header("Clearances")]
+    public float leftSideClearance = -1.5f;
+    public float rightSideClearance = 1.5f;
+    public float frontClearance = 3f;
+    public float backClearance = -3f;
 
     [Header("Movement Settings")]
-    public float speed = 1.5f;
-    public float rotationSpeed = 1.5f;
+    public float speed = 2f;
+    public float rotationSpeed = 2f;
     public float distanceToNextWaypoint = 1f;
-    public float accelerationRate = 1.5f;
-    public float decelerationRate = 2f;
+    public float accelerationRate = 2f;
+    public float decelerationRate = 4f;
     public float maxSpeed = 8f;
 
-    private float currentSpeed = 0f;
+    internal float currentSpeed = 0f;
     private float targetSpeed = 0f;
 
     [Header("State & References")]
     public bool disabled;
-    private bool movingToPark = false;
+    internal bool movingToPark = false;
     private int currentIndex = 0;
     private Transform targetWaypoint;
     private List<Transform> waypoints;
     private ParkingArray pA;
     private CarSpawner cS;
-    //public Transform chosenPark;
+    public Transform chosenPark;
     public List<GameObject> vehicleList;
 
-    private NewCar oCar;
-    private NewBus oBus;
-    private NewTruck oTruck;
-    private bool carTrue, busTrue, truckTrue;
-
-    private bool firstPark;
+    private bool firstPark, readyToMove;
     private float shortestDistance;
+
+    private bool hasTriggeredSpawn = false;
+
+
+    [Header("Collision CheckSphere Settings")]
+    public float sphereRadius = 1.5f;
+    public float sphereForwardOffset = 4f;
+    public float sphereHeightOffset = 1.5f;
+    public LayerMask vehicleMask;
 
     void Awake()
     {
-        SetSides(-1.25f, 4.5f, -3.8f);
-
-        leftSideClearance = model.localPosition.x + leftSide + 0.5f;
-        rightSideClearance = model.localPosition.x + rightSide - 0.5f;
-        frontClearance = model.localPosition.z + frontSide + 0.25f;
-        backClearance = model.localPosition.z + backSide;
+        rb = GetComponent<Rigidbody>();
 
         rPGO = GameObject.FindWithTag("printerTag");
         rP = rPGO.GetComponent<ResultPrinter>();
@@ -65,114 +64,86 @@ public class NewBus : MonoBehaviour
         if (!movingToPark || waypoints == null || waypoints.Count == 0) return;
 
         MoveToNextPoint(waypoints[currentIndex]);
-    }
 
+        vehicleList.Clear();
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Car"));
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Bus"));
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Truck"));
+
+    }
 
     void MoveToNextPoint(Transform nextPoint)
     {
-        Vector3 direction = (nextPoint.position - transform.position).normalized;
+        Vector3 direction = nextPoint.position - transform.position;
+        direction.y = 0f; // Prevent vertical rotation
+        direction.Normalize();
+
         Vector3 proposedPosition = transform.position + direction * currentSpeed * Time.deltaTime;
+        
+        if (nextPoint.position == transform.position)
+        {
+            gameObject.SetActive(false);
+        }
 
         targetSpeed = CanMoveTo(proposedPosition) ? speed : 0f;
         ApplySmoothMovement(direction);
 
-        if (Vector3.Distance(transform.position, nextPoint.position) < distanceToNextWaypoint)
+        if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), new Vector3(nextPoint.position.x, 0, nextPoint.position.z)) < distanceToNextWaypoint)
         {
             if (currentIndex + 1 < waypoints.Count)
                 currentIndex++;
+
+            if (currentIndex >= 18)
+                SpawnNewVehicle();
         }
     }
+
+    private void SpawnNewVehicle()
+    {
+        if (!hasTriggeredSpawn)
+        {
+            cS.AllowNextSpawn();
+            print(gameObject.name + "calls CarSpawner to spawn new vehicle");
+            hasTriggeredSpawn = true;
+        }
+    }
+
 
     void ApplySmoothMovement(Vector3 direction)
     {
         direction.Normalize();
-
-        // Check raycast forward to avoid hitting other vehicles
-        float raycastDistance = 1.5f; // adjust as needed
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, transform.forward, out hit, raycastDistance))
-        {
-            if (hit.collider.CompareTag("Car") || hit.collider.CompareTag("Bus") || hit.collider.CompareTag("Truck"))
-            {
-                targetSpeed = 0f; // Stop if another vehicle is too close ahead
-            }
-        }
 
         if (targetSpeed > currentSpeed)
             currentSpeed += accelerationRate * Time.deltaTime;
         else if (targetSpeed < currentSpeed)
             currentSpeed -= decelerationRate * Time.deltaTime;
 
-        currentSpeed = Mathf.Clamp(currentSpeed, 0, maxSpeed);
+        currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
 
-        if (direction != Vector3.zero)
+        Vector3 flatDirection = new Vector3(direction.x, 0f, direction.z).normalized;
+        if (flatDirection.sqrMagnitude > 0.001f)
         {
-            Quaternion targetRot = Quaternion.LookRotation(direction);
+            Quaternion targetRot = Quaternion.LookRotation(flatDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
         }
 
         transform.position += direction * currentSpeed * Time.deltaTime;
     }
 
-
-    private void SetSides(float sideOffset, float front, float back)
-    {
-        leftSide = sideOffset;
-        rightSide = -sideOffset;
-        frontSide = front;
-        backSide = back;
-    }
-
     public bool CanMoveTo(Vector3 proposedPosition)
     {
-        foreach (GameObject otherGO in vehicleList)
+        Vector3 sphereCenter = proposedPosition + transform.forward * sphereForwardOffset + Vector3.up * sphereHeightOffset;
+
+        Collider[] hits = Physics.OverlapSphere(sphereCenter, sphereRadius, vehicleMask);
+        foreach (Collider col in hits)
         {
-            Transform other = otherGO.transform;
-            if (other == transform) continue;
+            if (col.gameObject == gameObject) continue;
 
-            // Reset flags
-            carTrue = busTrue = truckTrue = false;
-
-            if (other.CompareTag("Car")) { carTrue = true; oCar = other.GetComponent<NewCar>(); }
-            else if (other.CompareTag("Bus")) { busTrue = true; oBus = other.GetComponent<NewBus>(); }
-            else if (other.CompareTag("Truck")) { truckTrue = true; oTruck = other.GetComponent<NewTruck>(); }
-
-            float ourLeft = proposedPosition.x + leftSideClearance;
-            float ourRight = proposedPosition.x + rightSideClearance;
-            float ourFront = proposedPosition.z + frontClearance;
-            float ourBack = proposedPosition.z + backClearance;
-
-            float theirLeft = 0, theirRight = 0, theirFront = 0, theirBack = 0;
-
-            if (carTrue)
+            string tag = col.tag;
+            if (tag == "Car" || tag == "Bus" || tag == "Truck")
             {
-                var pos = oCar.transform.position;
-                theirLeft = pos.x + oCar.leftSideClearance;
-                theirRight = pos.x + oCar.rightSideClearance;
-                theirFront = pos.z + oCar.frontClearance;
-                theirBack = pos.z + oCar.backClearance;
+                return false;
             }
-            else if (busTrue)
-            {
-                var pos = oBus.transform.position;
-                theirLeft = pos.x + oBus.leftSideClearance;
-                theirRight = pos.x + oBus.rightSideClearance;
-                theirFront = pos.z + oBus.frontClearance;
-                theirBack = pos.z + oBus.backClearance;
-            }
-            else if (truckTrue)
-            {
-                var pos = oTruck.transform.position;
-                theirLeft = pos.x + oTruck.leftSideClearance;
-                theirRight = pos.x + oTruck.rightSideClearance;
-                theirFront = pos.z + oTruck.frontClearance;
-                theirBack = pos.z + oTruck.backClearance;
-            }
-
-            bool overlapX = !(ourRight < theirLeft || ourLeft > theirRight);
-            bool overlapZ = !(ourFront < theirBack || ourBack > theirFront);
-
-            if (overlapX && overlapZ) return false;
         }
 
         return true;
@@ -183,5 +154,16 @@ public class NewBus : MonoBehaviour
         waypoints = path;
         pA = parkingArray;
         cS = spawner;
+
+        currentIndex = 0;
+        movingToPark = true; // <--- THIS IS WHAT'S MISSING
+    }
+
+    
+    private void OnDrawGizmosSelected()
+    {
+        Vector3 sphereCenter = transform.position + transform.forward * sphereForwardOffset + Vector3.up * sphereHeightOffset;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(sphereCenter, sphereRadius);
     }
 }

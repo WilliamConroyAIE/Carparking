@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5312053658560874959}
   - component: {fileID: 7395753889967143960}
   - component: {fileID: 8780247982207542961}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Car1Wheel-RR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,9 +117,9 @@ GameObject:
   - component: {fileID: 7309368947799946153}
   - component: {fileID: 1346277521969451551}
   - component: {fileID: 2288400018949525595}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Meshes
-  m_TagString: Car
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c889b7aa6839dca4aa67c2df90c5fa99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snapBuffer: 0.05
   currentType: 1
   parkingOutDistance: 6.25
   leftSideClearance: 0
@@ -307,6 +308,13 @@ MonoBehaviour:
   disabled: 0
   chosenPark: {fileID: 0}
   vehicleList: []
+  parked: 0
+  sphereRadius: 1
+  sphereForwardOffset: 3
+  sphereHeightOffset: 1
+  vehicleMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &5447095335672482228
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +327,7 @@ GameObject:
   - component: {fileID: 4182486642319838243}
   - component: {fileID: 4987178067649985087}
   - component: {fileID: 7244800429661161127}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Car1Wheel-FL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +432,7 @@ GameObject:
   - component: {fileID: 954906967928072123}
   - component: {fileID: 5350162895499674517}
   - component: {fileID: 1231791903945957519}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Car1Wheel-RL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +537,7 @@ GameObject:
   - component: {fileID: 6179971994023516873}
   - component: {fileID: 8805549556985665188}
   - component: {fileID: 1758337795237043650}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Car1Wheel-FR
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -7,6 +7,7 @@ public class NewCar : MonoBehaviour
     private Rigidbody rb;
     private ResultPrinter rP;
     private GameObject rPGO;
+    public float snapBuffer = 0.5f;
 
     public enum carType { taxi, sedan, suv, van, ute, sport, rozzas }
     public carType currentType;
@@ -26,12 +27,12 @@ public class NewCar : MonoBehaviour
     public float decelerationRate = 4f;
     public float maxSpeed = 10f;
 
-    private float currentSpeed = 0f;
+    internal float currentSpeed = 0f;
     private float targetSpeed = 0f;
 
     [Header("State & References")]
     public bool disabled;
-    private bool movingToPark = false;
+    internal bool movingToPark = false;
     private int currentIndex = 0;
     private Transform targetWaypoint;
     private List<Transform> waypoints;
@@ -47,6 +48,17 @@ public class NewCar : MonoBehaviour
 
     private bool firstPark, readyToMove;
     private float shortestDistance;
+
+    public bool parked;
+
+    private bool hasTriggeredSpawn = false;
+
+
+    [Header("Collision CheckSphere Settings")]
+    public float sphereRadius = 1.5f;
+    public float sphereForwardOffset = 4f;
+    public float sphereHeightOffset = 1.5f;
+    public LayerMask vehicleMask;
 
     void Awake()
     {
@@ -80,13 +92,27 @@ public class NewCar : MonoBehaviour
         cS = spawner;
 
         List<GameObject> spotList = disabled ? pA.availableDisabled : pA.availableStandard;
+
+        if (spotList == null || spotList.Count == 0)
+        {
+            // Try the other type
+            disabled = !disabled;
+            spotList = disabled ? pA.availableDisabled : pA.availableStandard;
+        }
+
+        if (spotList == null || spotList.Count == 0)
+        {
+            Debug.LogWarning($"{gameObject.name} couldn't find any parking spots! All full.");
+            return;
+        }
+
         shortestDistance = Mathf.Infinity;
         Transform bestSpot = null;
 
         foreach (GameObject s in spotList)
         {
             ParkingSpot pS = s.GetComponent<ParkingSpot>();
-            if (pS.taken) continue;
+            if (pS == null || pS.taken) continue;
 
             float newDistance = Vector3.Distance(transform.position, s.transform.position);
             if (firstPark || newDistance < shortestDistance)
@@ -101,38 +127,41 @@ public class NewCar : MonoBehaviour
         {
             chosenPark = bestSpot;
             bestSpot.GetComponent<ParkingSpot>().taken = true;
+            Debug.Log($"{gameObject.name} chose parking spot: {bestSpot.name} at distance {shortestDistance} (disabled={disabled})");
             currentIndex = 0;
             movingToPark = true;
         }
         else
         {
             Debug.LogWarning($"{gameObject.name} couldn't find a valid parking spot!");
+            return;
         }
 
         readyToMove = true;
     }
 
+
     void Update()
     {
         if (!movingToPark) return;
 
-        vehicleList.Clear(); // Add this at the start to prevent growth
-
-        GameObject[] cars = GameObject.FindGameObjectsWithTag("Car");
-        foreach(GameObject c in cars)
-            vehicleList.Add(c);
-
-        GameObject[] buses = GameObject.FindGameObjectsWithTag("Bus");
-        foreach(GameObject b in buses)
-            vehicleList.Add(b);
-
-        GameObject[] trucks = GameObject.FindGameObjectsWithTag("Truck");
-        foreach(GameObject t in trucks)
-            vehicleList.Add(t);
-
+        vehicleList.Clear();
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Car"));
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Bus"));
+        vehicleList.AddRange(GameObject.FindGameObjectsWithTag("Truck"));
 
         if (readyToMove)
             CheckingDistances();
+    }
+
+    private void SpawnNewVehicle()
+    {
+        if (!hasTriggeredSpawn)
+        {
+            cS.AllowNextSpawn();
+            print(gameObject.name + "calls CarSpawner to spawn new vehicle");
+            hasTriggeredSpawn = true;
+        }
     }
 
     void CheckingDistances()
@@ -141,12 +170,6 @@ public class NewCar : MonoBehaviour
 
         // NEW: Immediately go to park if within 1f, regardless of next waypoint
         if (distanceToPark <= parkingOutDistance)
-        {
-            MoveToParkingSpot();
-            return;
-        }
-
-        if (currentIndex >= waypoints.Count)
         {
             MoveToParkingSpot();
             return;
@@ -174,6 +197,9 @@ public class NewCar : MonoBehaviour
         {
             if (currentIndex + 1 < waypoints.Count)
                 currentIndex++;
+
+            if (currentIndex >= 18)
+                SpawnNewVehicle();
         }
     }
 
@@ -186,23 +212,54 @@ public class NewCar : MonoBehaviour
         ApplySmoothMovement(direction);
 
         float dist = Vector3.Distance(transform.position, chosenPark.position);
+        Quaternion flatTargetRot = Quaternion.Euler(0f, chosenPark.rotation.eulerAngles.y, 0f);
+        float angleDiff = Quaternion.Angle(transform.rotation, flatTargetRot);
 
+        // --- NEW SNAP BUFFER ---
+        if (dist < snapBuffer)
+        {
+            // Snap instantly to position and rotation
+            transform.position = chosenPark.position;
+            transform.rotation = flatTargetRot;
+
+            if (disabled) pA.availableDisabled.Remove(chosenPark.gameObject);
+            else pA.availableStandard.Remove(chosenPark.gameObject);
+
+            currentSpeed = 0f;
+            targetSpeed = 0f;
+            movingToPark = false;
+
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                rb.constraints = RigidbodyConstraints.FreezeAll;
+            }
+
+            leftSideClearance = 0;
+            rightSideClearance = 0;
+            frontClearance = 0;
+            backClearance = 0;
+
+            parked = true;
+            print(gameObject.name + " has now parked (snapped).");
+            SpawnNewVehicle();
+            this.enabled = false;
+
+            return;
+        }
+
+        // Original gradual rotation logic (fallback if outside snap range)
         if (dist < 0.2f)
         {
-            Quaternion flatTargetRot = Quaternion.Euler(0f, chosenPark.rotation.eulerAngles.y, 0f);
-
-            // Only rotate in Y axis
             Quaternion currentFlatRot = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
-            Quaternion targetFlatRot = Quaternion.Euler(0f, chosenPark.rotation.eulerAngles.y, 0f);
-            transform.rotation = Quaternion.RotateTowards(currentFlatRot, targetFlatRot, rotationSpeed * Time.deltaTime);
-
-            float angleDiff = Quaternion.Angle(transform.rotation, flatTargetRot);
+            transform.rotation = Quaternion.RotateTowards(currentFlatRot, flatTargetRot, rotationSpeed * Time.deltaTime);
 
             if (angleDiff < 1f)
             {
-                // --- Replace this section with a snap ---
+                // Snap when fully aligned
                 transform.position = chosenPark.position;
-                transform.rotation = Quaternion.Euler(0f, chosenPark.rotation.eulerAngles.y, 0f);
+                transform.rotation = flatTargetRot;
 
                 if (disabled) pA.availableDisabled.Remove(chosenPark.gameObject);
                 else pA.availableStandard.Remove(chosenPark.gameObject);
@@ -223,10 +280,14 @@ public class NewCar : MonoBehaviour
                 frontClearance = 0;
                 backClearance = 0;
 
+                parked = true;
+                print(gameObject.name + " has now parked.");
+                SpawnNewVehicle();
                 this.enabled = false;
             }
         }
     }
+
 
     void ApplySmoothMovement(Vector3 direction)
     {
@@ -257,6 +318,41 @@ public class NewCar : MonoBehaviour
         }
 
         transform.position += direction * currentSpeed * Time.deltaTime;
+
+        // Forward raycast collision check
+        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, transform.forward, out RaycastHit hitt, raycastDistance))
+        {
+            if (hitt.collider.CompareTag("Car") || hitt.collider.CompareTag("Bus") || hitt.collider.CompareTag("Truck"))
+            {
+                GameObject detected = hitt.collider.gameObject;
+
+                bool isStoppedAndNotParked = false;
+
+                if (detected.CompareTag("Car"))
+                {
+                    NewCar other = detected.GetComponent<NewCar>();
+                    if (other != null && other.enabled && other.movingToPark && other.currentSpeed < 0.1f)
+                        isStoppedAndNotParked = true;
+                }
+                else if (detected.CompareTag("Bus"))
+                {
+                    NewBus other = detected.GetComponent<NewBus>();
+                    if (other != null && other.enabled && other.movingToPark && other.currentSpeed < 0.1f)
+                        isStoppedAndNotParked = true;
+                }
+                else if (detected.CompareTag("Truck"))
+                {
+                    NewTruck other = detected.GetComponent<NewTruck>();
+                    if (other != null && other.enabled && other.movingToPark && other.currentSpeed < 0.1f)
+                        isStoppedAndNotParked = true;
+                }
+
+                if (isStoppedAndNotParked)
+                {
+                    targetSpeed = 0f;
+                }
+            }
+        }
     }
 
     private void SetSides(float sideOffset, float front, float back)
@@ -269,83 +365,35 @@ public class NewCar : MonoBehaviour
 
     public bool CanMoveTo(Vector3 proposedPosition)
     {
-        if (vehicleList == null || vehicleList.Count <= 1)
-            return true;
+        Vector3 sphereCenter = proposedPosition + transform.forward * sphereForwardOffset + Vector3.up * sphereHeightOffset;
 
-        foreach (GameObject otherGO in vehicleList)
+        Collider[] hits = Physics.OverlapSphere(sphereCenter, sphereRadius, vehicleMask);
+        foreach (Collider col in hits)
         {
-            if (otherGO == null || otherGO == gameObject || !otherGO.activeInHierarchy)
-                continue;
+            if (col.gameObject == gameObject) continue;
 
-            Transform other = otherGO.transform;
-
-            carTrue = busTrue = truckTrue = false;
-
-            if (other.CompareTag("Car"))
+            string tag = col.tag;
+            if (tag == "Car" || tag == "Bus" || tag == "Truck")
             {
-                oCar = other.GetComponent<NewCar>();
-                if (oCar == null) continue;
-                carTrue = true;
-            }
-            else if (other.CompareTag("Bus"))
-            {
-                oBus = other.GetComponent<NewBus>();
-                if (oBus == null) continue;
-                busTrue = true;
-            }
-            else if (other.CompareTag("Truck"))
-            {
-                oTruck = other.GetComponent<NewTruck>();
-                if (oTruck == null) continue;
-                truckTrue = true;
-            }
-
-            float ourLeft = proposedPosition.x + leftSideClearance;
-            float ourRight = proposedPosition.x + rightSideClearance;
-            float ourFront = proposedPosition.z + frontClearance;
-            float ourBack = proposedPosition.z + backClearance;
-
-            float theirLeft = 0, theirRight = 0, theirFront = 0, theirBack = 0;
-
-            if (carTrue)
-            {
-                var pos = oCar.transform.position;
-                theirLeft = pos.x + oCar.leftSideClearance;
-                theirRight = pos.x + oCar.rightSideClearance;
-                theirFront = pos.z + oCar.frontClearance;
-                theirBack = pos.z + oCar.backClearance;
-            }
-            else if (busTrue)
-            {
-                var pos = oBus.transform.position;
-                theirLeft = pos.x + oBus.leftSideClearance;
-                theirRight = pos.x + oBus.rightSideClearance;
-                theirFront = pos.z + oBus.frontClearance;
-                theirBack = pos.z + oBus.backClearance;
-            }
-            else if (truckTrue)
-            {
-                var pos = oTruck.transform.position;
-                theirLeft = pos.x + oTruck.leftSideClearance;
-                theirRight = pos.x + oTruck.rightSideClearance;
-                theirFront = pos.z + oTruck.frontClearance;
-                theirBack = pos.z + oTruck.backClearance;
-            }
-
-            bool overlapX = !(ourRight < theirLeft || ourLeft > theirRight);
-            bool overlapZ = !(ourFront < theirBack || ourBack > theirFront);
-
-            if (overlapX && overlapZ)
                 return false;
+            }
         }
 
         return true;
     }
 
 
+
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, parkingOutDistance);
+        if (!parked)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, parkingOutDistance);
+
+            Vector3 sphereCenter = transform.position + transform.forward * sphereForwardOffset + Vector3.up * sphereHeightOffset;
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(sphereCenter, sphereRadius);
+        }
     }
 }
