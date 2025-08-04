@@ -22,7 +22,14 @@ public class Deleter : MonoBehaviour
         if (((1 << rootObject.layer) & vehicleLayerMask.value) != 0)
         {
             rootObject.SetActive(false);
-            Debug.Log(rootObject.name + " has been deleted");
+
+            if (rootObject.CompareTag("Bus") || rootObject.CompareTag("Truck"))
+            {
+                rP.bVehicleList.Remove(rootObject);
+                rP.CountFailures();
+            }
+
+            //Debug.Log(rootObject.name + " has been deleted");
         }
     }
 }

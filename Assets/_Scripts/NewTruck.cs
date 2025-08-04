@@ -111,7 +111,7 @@ public class NewTruck : MonoBehaviour
         if (!hasTriggeredSpawn)
         {
             cS.AllowNextSpawn();
-            print(gameObject.name + "calls CarSpawner to spawn new vehicle");
+            //print(gameObject.name + "calls CarSpawner to spawn new vehicle");
             hasTriggeredSpawn = true;
         }
     }

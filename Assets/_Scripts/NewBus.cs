@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NewBus : MonoBehaviour
 {
-    private Rigidbody rb;
     private ResultPrinter rP;
     private GameObject rPGO;
 
@@ -52,8 +51,6 @@ public class NewBus : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-
         rPGO = GameObject.FindWithTag("printerTag");
         rP = rPGO.GetComponent<ResultPrinter>();
         rP.addVehicleToaVehicles(this.gameObject);
@@ -103,7 +100,7 @@ public class NewBus : MonoBehaviour
         if (!hasTriggeredSpawn)
         {
             cS.AllowNextSpawn();
-            print(gameObject.name + "calls CarSpawner to spawn new vehicle");
+            //print(gameObject.name + "calls CarSpawner to spawn new vehicle");
             hasTriggeredSpawn = true;
         }
     }

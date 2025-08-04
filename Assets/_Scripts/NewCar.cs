@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NewCar : MonoBehaviour
 {
-    private Rigidbody rb;
     private ResultPrinter rP;
     private GameObject rPGO;
     public float snapBuffer = 0.5f;
@@ -61,9 +60,7 @@ public class NewCar : MonoBehaviour
     public LayerMask vehicleMask;
 
     void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-            
+    {            
         switch (currentType)
         {
             case carType.taxi:   SetSides(-1.08f, 2.69f, -2.7f); break;
@@ -91,23 +88,53 @@ public class NewCar : MonoBehaviour
         pA = parkingArray;
         cS = spawner;
 
-        List<GameObject> spotList = disabled ? pA.availableDisabled : pA.availableStandard;
+        bool triedStandard = false;
+        bool triedDisabled = false;
 
-        if (spotList == null || spotList.Count == 0)
-        {
-            // Try the other type
-            disabled = !disabled;
-            spotList = disabled ? pA.availableDisabled : pA.availableStandard;
-        }
-
-        if (spotList == null || spotList.Count == 0)
-        {
-            Debug.LogWarning($"{gameObject.name} couldn't find any parking spots! All full.");
-            return;
-        }
-
-        shortestDistance = Mathf.Infinity;
         Transform bestSpot = null;
+        shortestDistance = Mathf.Infinity;
+
+        // Try finding a spot as a standard car
+        if (!disabled)
+        {
+            triedStandard = true;
+            bestSpot = GetBestAvailableSpot(pA.availableStandard);
+        }
+
+        // If no standard spot found, try as a disabled car
+        if (bestSpot == null)
+        {
+            disabled = true;
+            triedDisabled = true;
+            bestSpot = GetBestAvailableSpot(pA.availableDisabled);
+
+            if (bestSpot != null)
+                Debug.Log($"{gameObject.name} could not find standard parking. Switched to DISABLED car.");
+        }
+
+        if (bestSpot != null)
+        {
+            chosenPark = bestSpot;
+            bestSpot.GetComponent<ParkingSpot>().taken = true;
+            //Debug.Log($"{gameObject.name} chose parking spot: {bestSpot.name} at distance {shortestDistance} (disabled={disabled})");
+
+            currentIndex = 0;
+            movingToPark = true;
+            readyToMove = true;
+        }
+        else
+        {
+            Debug.LogWarning($"{gameObject.name} couldn't find a valid parking spot!");
+        }
+    }
+
+    private Transform GetBestAvailableSpot(List<GameObject> spotList)
+    {
+        Transform bestSpot = null;
+        shortestDistance = Mathf.Infinity;
+
+        if (spotList == null || spotList.Count == 0)
+            return null;
 
         foreach (GameObject s in spotList)
         {
@@ -123,21 +150,7 @@ public class NewCar : MonoBehaviour
             }
         }
 
-        if (bestSpot != null)
-        {
-            chosenPark = bestSpot;
-            bestSpot.GetComponent<ParkingSpot>().taken = true;
-            Debug.Log($"{gameObject.name} chose parking spot: {bestSpot.name} at distance {shortestDistance} (disabled={disabled})");
-            currentIndex = 0;
-            movingToPark = true;
-        }
-        else
-        {
-            Debug.LogWarning($"{gameObject.name} couldn't find a valid parking spot!");
-            return;
-        }
-
-        readyToMove = true;
+        return bestSpot;
     }
 
 
@@ -159,7 +172,7 @@ public class NewCar : MonoBehaviour
         if (!hasTriggeredSpawn)
         {
             cS.AllowNextSpawn();
-            print(gameObject.name + "calls CarSpawner to spawn new vehicle");
+            //print(gameObject.name + "calls CarSpawner to spawn new vehicle");
             hasTriggeredSpawn = true;
         }
     }
@@ -198,8 +211,9 @@ public class NewCar : MonoBehaviour
             if (currentIndex + 1 < waypoints.Count)
                 currentIndex++;
 
-            if (currentIndex >= 18)
+            if (currentIndex >= 10)
                 SpawnNewVehicle();
+
         }
     }
 
@@ -229,21 +243,16 @@ public class NewCar : MonoBehaviour
             targetSpeed = 0f;
             movingToPark = false;
 
-            if (rb != null)
-            {
-                rb.velocity = Vector3.zero;
-                rb.angularVelocity = Vector3.zero;
-                rb.constraints = RigidbodyConstraints.FreezeAll;
-            }
-
             leftSideClearance = 0;
             rightSideClearance = 0;
             frontClearance = 0;
             backClearance = 0;
 
+
             parked = true;
-            print(gameObject.name + " has now parked (snapped).");
+            //print(gameObject.name + " has now parked (snapped).");
             SpawnNewVehicle();
+            rP.countHowManyAreParkedFunction();
             this.enabled = false;
 
             return;
@@ -268,20 +277,13 @@ public class NewCar : MonoBehaviour
                 targetSpeed = 0f;
                 movingToPark = false;
 
-                if (rb != null)
-                {
-                    rb.velocity = Vector3.zero;
-                    rb.angularVelocity = Vector3.zero;
-                    rb.constraints = RigidbodyConstraints.FreezeAll;
-                }
-
                 leftSideClearance = 0;
                 rightSideClearance = 0;
                 frontClearance = 0;
                 backClearance = 0;
 
                 parked = true;
-                print(gameObject.name + " has now parked.");
+                //print(gameObject.name + " has now parked.");
                 SpawnNewVehicle();
                 this.enabled = false;
             }

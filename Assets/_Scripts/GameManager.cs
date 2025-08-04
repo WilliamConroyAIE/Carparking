@@ -14,19 +14,23 @@ public class GameManager : MonoBehaviour
     [Space]
     public TextMeshProUGUI speedText;
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X) && !fast)
+        // Toggle slow mode if not fast
+        if (Input.GetKeyDown(KeyCode.X) && !fast && !faster && !fastest)
         {
             slow = !slow;
         }
 
+        // Toggle fast mode if not slow
         if (Input.GetKeyDown(KeyCode.V) && !slow)
         {
             fast = !fast;
+            faster = false;
+            fastest = false;
         }
 
+        // 10x speed (faster)
         if (Input.GetKeyDown(KeyCode.N) && !slow)
         {
             fast = false;
@@ -34,6 +38,7 @@ public class GameManager : MonoBehaviour
             fastest = false;
         }
 
+        // 25x speed (fastest)
         if (Input.GetKeyDown(KeyCode.Z) && !slow)
         {
             fast = false;
@@ -41,41 +46,44 @@ public class GameManager : MonoBehaviour
             fastest = true;
         }
 
+        // Pause toggle
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             paused = !paused;
         }
 
+        // Handle pause
         if (paused)
         {
             speedText.text = "Paused";
             Time.timeScale = 0f;
-            return; // Skip further updates if paused
+            return;
         }
 
-        if (fast && !slow)
-        {
-            speedText.text = "GameSpeed = 2x";
-            Time.timeScale = 2f;
-        }
-        else if (slow && !fast)
+        // Set speed text and Time.timeScale
+        if (slow)
         {
             speedText.text = "GameSpeed = 0.5x";
             Time.timeScale = 0.5f;
         }
-        else if (!slow && faster)
+        else if (fast)
+        {
+            speedText.text = "GameSpeed = 2x";
+            Time.timeScale = 2f;
+        }
+        else if (faster)
         {
             speedText.text = "GameSpeed = 10x";
             Time.timeScale = 10f;
         }
-        else if (!slow && fastest)
+        else if (fastest)
         {
             speedText.text = "GameSpeed = 25x";
             Time.timeScale = 25f;
         }
         else
         {
-            speedText.text = "";
+            speedText.text = "GameSpeed = 1x";
             Time.timeScale = 1f;
         }
     }

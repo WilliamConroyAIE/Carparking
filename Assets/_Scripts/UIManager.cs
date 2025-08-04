@@ -12,10 +12,12 @@ public class UIManager : MonoBehaviour
 
     private ParkingArray pA;
     private CarSpawner cS;
+    private ResultPrinter rP;
+
 
     [Header("Text")]
     public TextMeshProUGUI allText;
-    public TextMeshProUGUI standardCarText, disabledCarText, busText, truckText;
+    //public TextMeshProUGUI standardCarText, disabledCarText, busText, truckText;
 
     [Space]
 
@@ -58,9 +60,18 @@ public class UIManager : MonoBehaviour
     public TMP_InputField fluidIF;
 
 
+    [Header("FinishedSimStuff")]
+    public GameObject finishedPanel;
+    public TextMeshProUGUI parkedNumberText, failedNumberText, parkEfficiencyText, timeStatementText;
+
+    private int parkingEfficiency;
+
 
     #endregion
 
+    private int minutes, seconds;
+
+    private int newCount, parkedCount;
 
     #region Start + Update + Sim
     void Start()
@@ -68,7 +79,9 @@ public class UIManager : MonoBehaviour
         //Gets the scripts to collect variables
         pA = GameObject.FindWithTag("parkingTag").GetComponent<ParkingArray>();
         cS = GameObject.FindWithTag("spawnerTag").GetComponent<CarSpawner>();
+        rP = GameObject.FindWithTag("printerTag").GetComponent<ResultPrinter>();
 
+        finishedPanel.SetActive(false);
         requestPanel.SetActive(true);
         onRequestPanel = true;
 
@@ -88,24 +101,46 @@ public class UIManager : MonoBehaviour
         rozzasIF.onValueChanged.AddListener(OnRozzasValueChanged);
         boxIF.onValueChanged.AddListener(OnBoxTruckValueChanged);
         fluidIF.onValueChanged.AddListener(OnFluidTruckValueChanged);
+        
+        parkedCount = rP.GetTotalParked();
+        StartCoroutine(StartCount());
+    }
+
+    IEnumerator StartCount()
+    {
+
+        if (parkedCount != newCount)
+        {
+            newCount = parkedCount;
+        }
+        
+        yield return new WaitForSeconds(1f);
+
+        parkedCount = rP.GetTotalParked();
+        //Debug.Log("newCount = " +$"{newCount}");
+
+        StartCoroutine(StartCount());
     }
 
     void Update()
     {
         if (!onRequestPanel)
         {
-            //Changing Text Points
-            allText.text = $"{cS.totalVInt.Count}" + " / " + $"{cS.totalVechiles}";
+            if (cS == null || allText == null) return;
 
-            standardCarText.text = $"{cS.totalSCars}" + " / " + $"{requestedStandardCarInt}";
+            // Get total parked
+            allText.text = $"{newCount} / {cS.totalVechiles}";
+            //standardCarText.text = cS.totalSCars.ToString();
+            //disabledCarText.text = cS.totalDCars.ToString();
 
-            disabledCarText.text = $"{cS.totalDCars}" + " / " + $"{requestedDisabledCarInt}";
+            // Show the current time
+            if (cS.timerRunning)
+            {
+                minutes = Mathf.FloorToInt(cS.simulationTimer / 60f);
+                seconds = Mathf.FloorToInt(cS.simulationTimer % 60f);
+                timerText.text = "Time: " + $"{minutes:00}:{seconds:00}";
 
-            busText.text = $"{cS.totalBuses}" + " / " + $"{requestedBusInt}";
-
-            truckText.text = $"{cS.totalTrucks}" + " / " + $"{requestedTruckInt}";
-
-            timerText.text = $"{cS.simulationTimer:F1}";
+            }
         }
         else
         {
@@ -154,6 +189,8 @@ public class UIManager : MonoBehaviour
                 requestedRozzas, requestedBusInt, requestedBoxTruck, requestedFluidTruck); 
 
             onRequestPanel = false;
+
+            rP.StartDebugCheckLoop();
         }
         else
         {
@@ -466,5 +503,27 @@ public class UIManager : MonoBehaviour
         fluidIF.text = requestedFluidTruck.ToString();
 
         changeToSimAllowed = true;
+    }
+
+    public void FinishedSim(int parkedNumber, int failedNumber, bool simIsFinished)
+    {
+        if (simIsFinished)
+        {
+            finishedPanel.SetActive(true);
+
+            parkedNumberText.text = "Vehicles Parked: " + $"{parkedNumber}";
+            failedNumberText.text = "Vehicles unable to find a park: " + $"{failedNumber}";
+
+            int time = Mathf.RoundToInt(cS.simulationTimer);
+
+            if (time >= 1)
+            {
+                parkingEfficiency = time % parkedNumber;
+            }
+
+            timeStatementText.text = "It took " + $"{minutes:00}:{seconds:00}" + " to park all cars";
+
+            parkEfficiencyText.text = "Average time took to park one car: " + $"{parkingEfficiency}" + " seconds";
+        }
     }
 }

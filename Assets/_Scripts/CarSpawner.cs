@@ -7,6 +7,7 @@ public class CarSpawner : MonoBehaviour
     #region Variables
 
     public LayerMask Vehicle;
+    private ResultPrinter rP;
 
     [Header("Arrays and Prefabs")]
     public NewCar[] carPrefabs;
@@ -38,7 +39,12 @@ public class CarSpawner : MonoBehaviour
 
     [Header("Timer")]
     public float simulationTimer = 0f;
-    private bool timerRunning = false;
+    internal bool timerRunning = false;
+
+
+    internal bool firstCarHasSpawned, allVehiclesSpawned;
+    private int vehiclesLeft;
+    bool firstTimeSpawj;
 
     #endregion
 
@@ -50,17 +56,44 @@ public class CarSpawner : MonoBehaviour
         standardCars = new List<GameObject>();
         disabledCars = new List<GameObject>();
         pA = GameObject.FindWithTag("parkingTag").GetComponent<ParkingArray>();
+        rP = GameObject.FindWithTag("printerTag").GetComponent<ResultPrinter>();
+
+        firstTimeSpawj = false;
     }
 
-    private void Update()
+    void Update()
     {
         if (timerRunning)
         {
             simulationTimer += Time.deltaTime;
-            if (vehicles.Count == 0)
+
+            // End timer when all vehicles are parked
+            if (rP != null && rP.GetTotalParked() >= totalVechiles)
+            {
                 timerRunning = false;
+                Debug.Log($"Simulation completed in {simulationTimer:F2} seconds");
+            }
+
+            
+
+            if (vehiclesLeft <= 0)
+            {
+                allVehiclesSpawned = true;
+                
+                if (!firstTimeSpawj)
+                {
+                    Debug.Log("Spawj");
+                    firstTimeSpawj = true;
+                }
+            }
+            else
+            {
+                allVehiclesSpawned = false;
+            }
+
         }
     }
+
 
     #endregion
 
@@ -68,10 +101,16 @@ public class CarSpawner : MonoBehaviour
 
     public void StartTestRun(int taNo, int seNo, int suNo, int vaNo, int utNo, int spNo, int roNo, int buNo, int boNo, int flNo)
     {
+        simulationTimer = 0f;
+        timerRunning = true;
+
         totalVInt.AddRange(new int[] { taNo, seNo, suNo, vaNo, utNo, spNo, roNo, buNo, boNo, flNo });
 
+        // Assign vehicle totals
         taxiNo = taNo; sedanNo = seNo; suvNo = suNo; vanNo = vaNo; uteNo = utNo;
         sportNo = spNo; rozzasNo = roNo; busNo = buNo; boxTruckNo = boNo; fluidTruckNo = flNo;
+
+        totalVechiles = taxiNo + sedanNo + suvNo + vanNo + uteNo + sportNo + rozzasNo + busNo + boxTruckNo + fluidTruckNo;
 
         totalPInt = GameObject.FindWithTag("parkingTag").GetComponent<ParkingArray>().parkingSpotTotal;
 
@@ -115,12 +154,16 @@ public class CarSpawner : MonoBehaviour
 
     private IEnumerator SpawnCars()
     {
+        firstCarHasSpawned = true;
+
         if (isSpawning) yield break;
         isSpawning = true;
 
         int remainingVehicles = taxiNo + sedanNo + suvNo + vanNo + uteNo + sportNo + rozzasNo + busNo + boxTruckNo + fluidTruckNo;
 
-        while (remainingVehicles > 0)
+        vehiclesLeft = remainingVehicles;
+
+        while (vehiclesLeft > 0)
         {
             List<int> availableTypes = new List<int>();
             if (taxiNo > 0) availableTypes.Add(0);
@@ -176,11 +219,11 @@ public class CarSpawner : MonoBehaviour
             }
 
             spawnAllowed = false;
-            remainingVehicles--;
+            vehiclesLeft--;
         }
 
-        totalVInt.Clear();
-        totalVechiles = 0;
+        //totalVInt.Clear();
+        //totalVechiles = 0;
         isSpawning = false;
     }
 
